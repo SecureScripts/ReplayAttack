@@ -52,6 +52,7 @@ done < "$file_path"
  #capture screenshot
 waitphone
 adb -s $ANDROID_SERIAL shell input keyevent 224
+sleep 2s
 waitphone
 adb -s $ANDROID_SERIAL shell -n screencap -p /sdcard/screen_exp.png
 waitphone

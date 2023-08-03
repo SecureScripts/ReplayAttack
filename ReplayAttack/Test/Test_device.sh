@@ -13,14 +13,14 @@ do
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_$i"
    mkdir -p $EXP_FOLDER
-   ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse
-   python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 10 20 $EXP_FOLDER "./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse" > $EXP_FOLDER/res.txt &
+   ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True
+   python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 10 20 $MODEL_FOLDER "./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse False" > $EXP_FOLDER/res.txt &
 
-   ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun
+   ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun False
 
    wait
   echo "CHECK GROUND TRUTH"
-  ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun
+  ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True
 
 
 done
