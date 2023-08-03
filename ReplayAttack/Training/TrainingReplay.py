@@ -115,10 +115,7 @@ print(accuracy_score(real_labels, predicted_labels))
 
 
 print("ThresholdsClusters:"+str(clf_cc.thresholdsCluster))
-try:
-    os.mkdir('Models/' + mac_device)
-except OSError as error:
-    print(error)
+
 
 f = open(model_path+ "/feature_num.txt", "w")
 f.write(str(max_features))

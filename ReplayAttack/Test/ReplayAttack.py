@@ -8,6 +8,7 @@ import pyshark
 from threading import Thread
 from time import sleep
 import socket
+import os
 
 
 class Flow:
@@ -32,6 +33,7 @@ mac_device = str(sys.argv[3])
 sniffing_time = int(sys.argv[4])
 delay_time = int(sys.argv[5])
 path_Models = str(sys.argv[6])
+cmd = str(sys.argv[7])
 filter = '(ether src ' + mac_device + ' and ether dst ' + mac_app + ') or (ether dst ' + mac_device + ' and ether src ' + mac_app + ')'
 
 capture = pyshark.LiveCapture(interface=interface, bpf_filter=filter)
@@ -50,7 +52,7 @@ clf_ee = pickle.load(open(path_Models + "/ee.sav", 'rb'))
 clf_lo = pickle.load(open(path_Models+ "/lo.sav", 'rb'))
 clf_cc = pickle.load(open(path_Models+"/cc.sav", 'rb'))
 
-f = open("Models/" + mac_device + "/feature_num.txt", "r")
+f = open(path_Models+ "/feature_num.txt", "r")
 max_num_features = int(f.read())
 
 
@@ -80,9 +82,7 @@ def threaded_function():
     print("START SNIFFING TIME")
     sleep(float(sniffing_time))
     print("END SNIFFING TIME")
-    f_txt = open("./temp.txt", 'w')
-    f_txt.write('END SNIFFING TIME')
-    f_txt.close()
+    os.system(cmd)
 
 
 

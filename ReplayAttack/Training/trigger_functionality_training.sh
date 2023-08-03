@@ -63,8 +63,8 @@ adb -s $ANDROID_SERIAL shell -n rm /sdcard/screen_exp.png
 COMP=$(convert $CAPT_DIR/reference.png $CAPT_DIR/screen_exp.png -crop $crop +repage miff:- | compare -verbose -metric MAE  - $CAPT_DIR/result.png 2>&1 | grep all | awk '{print $2}')
   if [ $COMP = "0" ]; then
        echo "Comparison ok"
-	rm $CAPT_DIR/screen_exp.png
-	rm $CAPT_DIR/result.png
+	#rm $CAPT_DIR/screen_exp.png
+	#rm $CAPT_DIR/result.png
   else
   echo "Error comparison"      
   fi

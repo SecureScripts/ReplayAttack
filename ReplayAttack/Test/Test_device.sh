@@ -14,8 +14,8 @@ do
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_$i"
    mkdir -p $EXP_FOLDER
    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse
-   python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 10 20 $EXP_FOLDER > $EXP_FOLDER/temp.txt &
-   ./reverseCommand.sh $ANDROID_SERIAL $MAC_DEVICE $PACKAGE &
+   python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 10 20 $EXP_FOLDER "./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse" > $EXP_FOLDER/res.txt &
+
    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun
 
    wait
