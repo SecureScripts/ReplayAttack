@@ -17,8 +17,8 @@ waitphone
 echo Phone ready, proceeding...
 
 mac_device="$1"
-name=$2
+name="$2"
 
 
- adb -s $ANDROID_SERIAL shell getevent -l > Result/$mac_device/raw_$name_coordinates.txt
+ adb -s $ANDROID_SERIAL shell getevent -l > Result/$mac_device/raw_${name}_coordinates.txt
 
