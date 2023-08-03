@@ -1,7 +1,3 @@
-#!/bin/bash
-
-PHONE="smartphoneGoogle"
-
 function waitphone {
     while [ -z "$PHONE_FOUND" ]; do
         echo "Phone not found, waiting for $PHONE/$ANDROID_SERIAL"
@@ -16,11 +12,10 @@ PHONE_FOUND=`adb devices | grep $ANDROID_SERIAL | grep device`
 waitphone
 echo Phone ready, proceeding...
 
-mac_device="$1"
-name="$2"
 
-trap 'python3 get_Coordinates.py $mac_device $name' SIGINT
-
-adb -s $ANDROID_SERIAL shell getevent -l > Result/$mac_device/raw_${name}_coordinates.txt
-
-
+waitphone
+adb -s $ANDROID_SERIAL shell -n screencap -p /sdcard/reference.png
+waitphone
+adb -s $ANDROID_SERIAL pull /sdcard/reference.png ./reference.png
+waitphone
+adb -s $ANDROID_SERIAL shell -n rm /sdcard/screen_exp.png
