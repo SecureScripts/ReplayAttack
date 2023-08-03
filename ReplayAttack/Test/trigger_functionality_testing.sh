@@ -30,13 +30,13 @@ echo "Starting experiment"
 waitphone
 adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1
 
-sleep 5s
+sleep 10s
 
 while read -r function
 do
 waitphone
 adb -s $ANDROID_SERIAL shell -n input $function
-sleep 3s
+sleep 5s
 done < "$file_path"
 
  #capture screenshot

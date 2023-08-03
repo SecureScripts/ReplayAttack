@@ -40,7 +40,7 @@ sleep 3s
 waitphone
 adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1
 
-sleep 5s
+sleep 10s
 
 while read -r function
 do
