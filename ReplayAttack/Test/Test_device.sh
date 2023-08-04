@@ -13,6 +13,11 @@ do
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_$i"
    mkdir -p $EXP_FOLDER
+   
+   adb -s $ANDROID_SERIAL shell input keyevent 224 
+   sleep 2s
+   
+   
    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True
    
    echo "#############################STARTING PYTHON SNIFFING#####################################"

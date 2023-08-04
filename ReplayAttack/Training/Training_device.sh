@@ -11,6 +11,10 @@ do
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Experiment_$i"
    mkdir -p $EXP_FOLDER
+   
+    adb -s $ANDROID_SERIAL shell input keyevent 224 
+    sleep 2s
+   
    python3 TrainingReplay.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 300 $EXP_FOLDER > $EXP_FOLDER/accuracy.txt &
    ./trigger_functionality_training.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP Result/$MAC_DEVICE/coordinates.txt
    wait

@@ -1,5 +1,6 @@
 import collections
 import math
+import signal
 import string
 import sys
 
@@ -54,7 +55,7 @@ clf_cc = pickle.load(open(path_Models+"/cc.sav", 'rb'))
 
 f = open(path_Models+ "/feature_num.txt", "r")
 max_num_features = int(f.read())
-
+pid=os.getpid()
 
 def tokenizeText(sample):
     return list(set(word_tokenize(sample)))
@@ -90,6 +91,7 @@ def threaded_function():
     global started_interval
     global list_flows
     global request
+    global pid
     started_thread = True
     sleep(float(delay_time))
     os.system(cmd)
@@ -192,7 +194,7 @@ def threaded_function():
 
     list_flows = collections.deque()
     print("END REPLAY ATTACK")
-    sys.exit(0)
+    os.kill(pid,signal.SIGINT)
     started_thread = False
     started_interval = False
     request = False
