@@ -40,15 +40,7 @@ sleep 5s
 done < "$file_path"
 
  #capture screenshot
-waitphone
-adb -s $ANDROID_SERIAL shell input keyevent 224 
-sleep 2s
-waitphone
-adb -s $ANDROID_SERIAL shell -n screencap -p /sdcard/screen_exp.png
-waitphone
-adb -s $ANDROID_SERIAL pull /sdcard/screen_exp.png $CAPT_DIR/screen_exp.png
-waitphone
-adb -s $ANDROID_SERIAL shell -n rm /sdcard/screen_exp.png
+./captureScreenshot.sh $CAPT_DIR $ANDROID_SERIAL
  
 if [[ $screen = "True" ]]
 then 
@@ -56,8 +48,6 @@ then
 COMP=$(convert $CAPT_DIR/${name}_reference.png $CAPT_DIR/screen_exp.png -crop $crop +repage miff:- | compare -verbose -metric MAE  - $CAPT_DIR/result.png 2>&1 | grep all | awk '{print $2}')
   if [ $COMP = "0" ]; then
        echo "Comparison ok"
-	#rm $CAPT_DIR/screen_exp.png
-	#rm $CAPT_DIR/result.png
   else
   echo "Error comparison"      
   fi
