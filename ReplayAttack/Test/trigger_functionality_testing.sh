@@ -39,11 +39,12 @@ adb -s $ANDROID_SERIAL shell -n input $function
 sleep 5s
 done < "$file_path"
 
- #capture screenshot
-./captureScreenshot.sh $CAPT_DIR $ANDROID_SERIAL
+
  
 if [[ $screen = "True" ]]
 then 
+ #capture screenshot
+./captureScreenshot.sh $CAPT_DIR $ANDROID_SERIAL
  #comparing screenshot
 COMP=$(convert $CAPT_DIR/${name}_reference.png $CAPT_DIR/screen_exp.png -crop $crop +repage miff:- | compare -verbose -metric MAE  - $CAPT_DIR/result.png 2>&1 | grep all | awk '{print $2}')
   if [ $COMP = "0" ]; then
