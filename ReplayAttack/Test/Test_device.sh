@@ -7,7 +7,7 @@ PACKAGE="$5"
 
 CROP_FUN=$(cat Result/$MAC_DEVICE/Capture/Fun_crop.txt)
 CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
-for i in {1..30}
+for i in 1
 do
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"

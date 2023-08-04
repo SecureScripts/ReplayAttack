@@ -6,7 +6,7 @@ INTERFACE="$4"
 PACKAGE="$5"
 
 CROP=$(cat Result/$MAC_DEVICE/Capture/crop.txt)
-for i in {1..30}
+for i in 1
 do
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Experiment_$i"
