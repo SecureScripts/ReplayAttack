@@ -16,7 +16,7 @@ do
    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True
    
    echo "#############################STARTING PYTHON SNIFFING#####################################"
-   python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 10 20 $MODEL_FOLDER "./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse False" > $EXP_FOLDER/res.txt &
+   python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 20 60 $MODEL_FOLDER "./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse False" > $EXP_FOLDER/res.txt &
 
    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun False
 

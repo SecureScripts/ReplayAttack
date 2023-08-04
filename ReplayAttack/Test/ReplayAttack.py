@@ -82,7 +82,7 @@ def threaded_function():
     print("START SNIFFING TIME")
     sleep(float(sniffing_time))
     print("END SNIFFING TIME")
-    os.system(cmd)
+    
 
 
 
@@ -92,6 +92,7 @@ def threaded_function():
     global request
     started_thread = True
     sleep(float(delay_time))
+    os.system(cmd)
     print('START REPLAY ATTACK')
     print('#######################################################################################')
 
