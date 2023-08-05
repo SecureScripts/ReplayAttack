@@ -39,6 +39,9 @@ adb -s $ANDROID_SERIAL shell -n input $function
 sleep 5s
 done < "$file_path"
 
+waitphone
+adb -s $ANDROID_SERIAL shell -n input tap 1010 2190
+sleep 1s
 
  
 if [[ $screen = "True" ]]

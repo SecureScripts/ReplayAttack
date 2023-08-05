@@ -194,7 +194,7 @@ def threaded_function():
 
     list_flows = collections.deque()
     print("END REPLAY ATTACK")
-    os.kill(pid,signal.SIGINT)
+    os._exit(0)
     started_thread = False
     started_interval = False
     request = False

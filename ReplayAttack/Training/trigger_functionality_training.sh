@@ -43,6 +43,11 @@ adb -s $ANDROID_SERIAL shell -n input $function
 sleep 5s
 done < "$file_path"
 
+waitphone
+adb -s $ANDROID_SERIAL shell -n input tap 1010 2190
+sleep 1s
+
+
  #capture screenshot
 ./captureScreenshot.sh $CAPT_DIR $ANDROID_SERIAL
  #comparing screenshot
