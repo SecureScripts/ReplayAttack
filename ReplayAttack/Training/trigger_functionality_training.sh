@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PHONE="smartphoneGoogle"
-CAPT_DIR="$3"
+
 
 function waitphone {
     while [ -z "$PHONE_FOUND" ]; do
@@ -17,53 +17,24 @@ PHONE_FOUND=`adb devices | grep $ANDROID_SERIAL | grep device`
 waitphone
 echo Phone ready, proceeding...
 
-package="$2"
+PACKAGE="$2"
 
 
-crop="$4"
-file_path="$5"
 
-training_time="$6"
+training_time="$3"
 
-tap_time="$7"
+tap_time="$4"
 
-open_time="$8"
+open_time="$5"
 
-echo "Starting experiment"
+CROP_FUN=$(cat ../Test/Result/$MAC_DEVICE/Capture/Fun_crop.txt)
+CROP_REVERSE=$(cat ../Test/Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 
 
 end=$((SECONDS+$training_time))
 while  [ $SECONDS -lt $end ]; do
 
-waitphone
-adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1
-
-sleep $open_time
-
-while read -r function
-do
-waitphone
-adb -s $ANDROID_SERIAL shell -n input $function
-sleep $tap_time
-done < "$file_path"
-
-waitphone
-adb -s $ANDROID_SERIAL shell -n input tap 1010 2190
-sleep 1s
-
-
- #capture screenshot
-./captureScreenshot.sh $CAPT_DIR $ANDROID_SERIAL
- #comparing screenshot
-
-COMP=$(convert $CAPT_DIR/reference.png $CAPT_DIR/screen_exp.png -crop $crop +repage miff:- | compare -verbose -metric MAE  - $CAPT_DIR/result.png 2>&1 | grep all | awk '{print $2}')
-  if [ $COMP = "0" ]; then
-       echo "Comparison ok"
-  else
-  echo "Error comparison"      
-  fi
-
-waitphone
-adb -s $ANDROID_SERIAL shell am force-stop $package
+../Test/trigger_functionality_testing.sh "$ANDROID_SERIAL" "$PACKAGE" ../Test/Result/$MAC_DEVICE/Capture $CROP_FUN ../Test/Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time
+../Test/trigger_functionality_testing.sh "$ANDROID_SERIAL" "$PACKAGE" ../Test/Result/$MAC_DEVICE/Capture $CROP_REVERSE ../Test/Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
 
 done
