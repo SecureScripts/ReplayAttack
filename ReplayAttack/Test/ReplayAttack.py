@@ -27,20 +27,14 @@ class Flow:
 
 list_flows = collections.deque()
 request = False
-start_time = 0
-interface = str(sys.argv[1])
+capture_path= str(sys.argv[1])
 mac_app = str(sys.argv[2])
 mac_device = str(sys.argv[3])
-sniffing_time = int(sys.argv[4])
-delay_time = int(sys.argv[5])
-path_Models = str(sys.argv[6])
-cmd = str(sys.argv[7])
-filter = '(ether src ' + mac_device + ' and ether dst ' + mac_app + ') or (ether dst ' + mac_device + ' and ether src ' + mac_app + ')'
+delay_time = int(sys.argv[4])
+path_Models = str(sys.argv[5])
 
-capture = pyshark.LiveCapture(interface=interface, bpf_filter=filter)
+capture = pyshark.FileCapture(capture_path)
 
-started_thread = False
-started_interval = False
 
 ############################################################################################################################
 from nltk.tokenize import word_tokenize
@@ -55,7 +49,7 @@ clf_cc = pickle.load(open(path_Models+"/cc.sav", 'rb'))
 
 f = open(path_Models+ "/feature_num.txt", "r")
 max_num_features = int(f.read())
-pid=os.getpid()
+
 
 def tokenizeText(sample):
     return list(set(word_tokenize(sample)))
@@ -79,22 +73,9 @@ def anomaly_detection(payload: string, clf, vectorize:bool):
 
 ############################################################################################################################
 
-def threaded_function():
-    print("START SNIFFING TIME")
-    sleep(float(sniffing_time))
-    print("END SNIFFING TIME")
-    
-
-
-
-    global started_thread
-    global started_interval
+def attack():
     global list_flows
-    global request
-    global pid
-    started_thread = True
     sleep(float(delay_time))
-    os.system(cmd)
     print('START REPLAY ATTACK')
     print('#######################################################################################')
 
@@ -194,17 +175,11 @@ def threaded_function():
 
     list_flows = collections.deque()
     print("END REPLAY ATTACK")
-    os._exit(0)
-    started_thread = False
-    started_interval = False
-    request = False
+
 
 
 # capture.apply_on_packets(packet_callback)
-for packet in capture.sniff_continuously():
-
-    if started_thread == True:
-        continue
+for packet in capture:
 
     try:
         if packet.transport_layer == None:  # ASSUNZIONE: I PACCHETTI SCAMBIATI CON IL DEVICE HANNO UN LIVELLO DI TRASPORTO
@@ -228,8 +203,7 @@ for packet in capture.sniff_continuously():
 
         print(payload)
 
-        if str(packet.eth._all_fields['eth.src']) == str(mac_app) and str(packet.eth._all_fields['eth.dst']) == str(
-                mac_device):
+        if str(packet.eth._all_fields['eth.src']) == str(mac_app) and str(packet.eth._all_fields['eth.dst']) == str(mac_device):
 
             if not request:
                 request = True
@@ -242,11 +216,6 @@ for packet in capture.sniff_continuously():
                 list_flows[len(list_flows) - 1] = current_flow
             continue
 
-            # DOUBLE CHECK: check if the source port of the app is the same of the destination port of the response
-
-            # if str(packet.ip.src) == str(device_ip_address) and (multicast_address_check(str(packet.ip.dst))==True or
-            # str(packet.ip.dst) == str(phone_ip_address) or
-            # str(packet.ip.dst) == '255.255.255.255'):
 
         if str(packet.eth._all_fields['eth.src']) == str(mac_device) and str(packet.eth._all_fields['eth.dst']) == str(
                 mac_app):
@@ -264,19 +233,11 @@ for packet in capture.sniff_continuously():
                 current_flow.list_responses = []
             current_flow.list_responses.append(payload)
             list_flows[len(list_flows) - 1] = current_flow
-            # print(len(list_flows))
-            # print(started_interval)
-            if len(list_flows) == 1 and not started_interval:
-                # print("Started Thread")
-                # started_thread=True
-                # start_time=time.time()
-                started_interval = True
-                thread = Thread(target=threaded_function)
-                thread.start()
-            continue
-
-
-
     except AttributeError as e:
         print(e)
         continue
+
+if(len(list_flows)<1):
+    print("Error in length list flow")
+else:
+    attack()

@@ -23,24 +23,28 @@ package="$2"
 crop="$4"
 file_path="$5"
 
+training_time="$6"
+
+tap_time="$7"
+
+open_time="$8"
+
 echo "Starting experiment"
 
 
-end=$((SECONDS+300))
+end=$((SECONDS+$training_time))
 while  [ $SECONDS -lt $end ]; do
-sleep 3s
- 
 
 waitphone
 adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1
 
-sleep 10s
+sleep $open_time
 
 while read -r function
 do
 waitphone
 adb -s $ANDROID_SERIAL shell -n input $function
-sleep 5s
+sleep $tap_time
 done < "$file_path"
 
 waitphone

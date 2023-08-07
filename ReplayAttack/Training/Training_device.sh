@@ -6,16 +6,23 @@ INTERFACE="$4"
 PACKAGE="$5"
 
 CROP=$(cat Result/$MAC_DEVICE/Capture/crop.txt)
+training_time=300
+tap_time="5s"
+open_time="10s"
+
+
+filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
 for i in 1
 do
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Experiment_$i"
-   mkdir -p $EXP_FOLDER
+   mkdir -p "$EXP_FOLDER"
    
-   adb -s $ANDROID_SERIAL shell input keyevent 224 
+   adb -s "$ANDROID_SERIAL" shell input keyevent 224
    sleep 2s
-   
-   #python3 TrainingReplay.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 300 $EXP_FOLDER > $EXP_FOLDER/accuracy.txt &
-   ./trigger_functionality_training.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP Result/$MAC_DEVICE/coordinates.txt
+    tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$training_time" &
+   ./trigger_functionality_training.sh "$ANDROID_SERIAL" "$PACKAGE" Result/"$MAC_DEVICE"/Capture "$CROP" Result/"$MAC_DEVICE"/coordinates.txt $training_time $tap_time $open_time
+
    wait
+   python3 TrainingReplay.py "$EXP_FOLDER" "$EXP_FOLDER/capture.pcap"  > $EXP_FOLDER/accuracy.txt
 done

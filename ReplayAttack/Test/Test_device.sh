@@ -7,6 +7,13 @@ PACKAGE="$5"
 
 CROP_FUN=$(cat Result/$MAC_DEVICE/Capture/Fun_crop.txt)
 CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
+
+tap_time="5s"
+open_time="10s"
+
+sniffing_time=20
+filter='(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)'
+
 for i in 1
 do
    echo "Experiment $i"
@@ -17,16 +24,28 @@ do
    adb -s $ANDROID_SERIAL shell input keyevent 224 
    sleep 2s
    
+   echo "CHECK THE INITIAL STATE"
+    temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Ground_coordinates.txt Reverse True $tap_time $open_time)
+    echo "THE INITIAL STATE IS ${temp##*$'\n'}"
+    if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
+    then
+    	echo "REVERSING THE STATE"
+    	./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
+    fi
    
-   ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True
-   
-   echo "#############################STARTING PYTHON SNIFFING#####################################"
-   #python3 ReplayAttack.py $INTERFACE $MAC_SMARTPHONE $MAC_DEVICE 20 60 $MODEL_FOLDER "./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True" > $EXP_FOLDER/res.txt &
+   echo "#############################STARTING SNIFFING#####################################"
+    tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
 
-./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True #Set false during experiments
-   wait
+    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time
+
+    wait
+    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
+
+   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE 60 $MODEL_FOLDER > $EXP_FOLDER/res.txt
+
+
   echo "CHECK GROUND TRUTH"
-  ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True
+  ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True $tap_time $open_time
 
 
 done

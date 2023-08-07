@@ -24,19 +24,25 @@ file_path="$5"
 name="$6"
 
 screen="$7"
-echo "Starting experiment"
+
+tap_time="$8"
+
+open_time="$9"
+
+
+echo "Starting Functionality"
 
 
 waitphone
 adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1
 
-sleep 10s
+sleep $open_time
 
 while read -r function
 do
 waitphone
 adb -s $ANDROID_SERIAL shell -n input $function
-sleep 5s
+sleep $tap_time
 done < "$file_path"
 
 waitphone

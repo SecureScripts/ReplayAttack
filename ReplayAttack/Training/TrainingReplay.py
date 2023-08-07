@@ -14,28 +14,25 @@ import pickle
 
 from CustomClassifier import CustomClassifier
 
-interface = str(sys.argv[1])
-mac_app = str(sys.argv[2])
-mac_device = str(sys.argv[3])
-training_time = int(sys.argv[4])
-model_path = str(sys.argv[5])
 
-filter = '(ether src ' + mac_device + ' and ether dst ' + mac_app + ')'
+
+capture_path = str(sys.argv[1])
+model_path = str(sys.argv[2])
+
 
 import nltk
 nltk.download('punkt')
 
-capture = pyshark.LiveCapture(interface=interface, bpf_filter=filter)
+capture = pyshark.FileCapture(capture_path)
 
 
 def tokenizeText(sample):
     return list(set(word_tokenize(sample)))
 
 
-start_time = time.time()
 payload_set = []
 max_features = 0
-for packet in capture.sniff_continuously():
+for packet in capture:
     try:
         if packet.transport_layer == None:  # ASSUNZIONE: I PACCHETTI SCAMBIATI CON IL DEVICE HANNO UN LIVELLO DI TRASPORTO
             continue
@@ -53,20 +50,8 @@ for packet in capture.sniff_continuously():
 
         if len(payload) == 0:
             continue
-        elapsed_time = time.time() - start_time
-        if (elapsed_time > training_time):
-            break
 
-        if (elapsed_time % 30 < 3):
-            print("Elapsed time:" + str(elapsed_time))
         payload = bytes.fromhex(payload).decode('ISO-8859-1')
-
-        if '{"error_code":9999}' in payload:
-            print(
-                '###########################################################################################################################################################')
-            print('ERROR CODE!!!')
-            print(
-                '###########################################################################################################################################################')
 
         payload = payload.replace("/", "").replace("+", "")
         payload_set.append(payload)
@@ -76,7 +61,7 @@ for packet in capture.sniff_continuously():
     except AttributeError as e:
         print(e)
         continue
-print('END SNIFFING')
+print('END READING PCAP')
 
 vectorizer = HashingVectorizer(n_features=max_features, tokenizer=tokenizeText)
 training_Set = vectorizer.fit_transform(payload_set).toarray()
