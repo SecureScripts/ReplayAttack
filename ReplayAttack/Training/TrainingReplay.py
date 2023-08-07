@@ -111,3 +111,5 @@ pickle.dump(clf_if, open(model_path + "/if.sav", 'wb'))
 pickle.dump(clf_ee, open(model_path + "/ee.sav", 'wb'))
 pickle.dump(clf_lo, open(model_path + "/lo.sav", 'wb'))
 pickle.dump(clf_cc, open(model_path + "/cc.sav", 'wb'))
+
+capture.close()

@@ -34,3 +34,6 @@ for packet in capture:
     except AttributeError as e:
         print(e)
         continue
+
+
+capture.close()

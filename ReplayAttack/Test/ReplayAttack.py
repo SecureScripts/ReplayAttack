@@ -241,3 +241,4 @@ if(len(list_flows)<1):
     print("Error in length list flow")
 else:
     attack()
+    capture.close()
