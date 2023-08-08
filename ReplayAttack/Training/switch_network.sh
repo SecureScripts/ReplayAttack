@@ -8,7 +8,7 @@ curr_SSID=$(adb -s $ANDROID_SERIAL shell dumpsys wifi | grep "current SSID")
 echo "$curr_SSID"
 #echo 'current SSID(s):{iface=wlan0,ssid="iotlab4"}' | cut -d'=' -f 3 | cut -d'"' -f 2
 #adb -s $ANDROID_SERIAL shell am start -n com.steinwurf.adbjoinwifi/.MainActivity -e ssid $SSID -e password_type WPA -e password $PASSWORD #da verificare che funziona quando la rete è già nota!
-adb -s $ANDROID_SERIAL shell am start -n com.steinwurf.adbjoinwifi/.MainActivity -e ssid SSID
+adb -s $ANDROID_SERIAL shell am start -n com.steinwurf.adbjoinwifi/.MainActivity -e ssid $SSID
 sleep 5s
 adb -s $ANDROID_SERIAL shell am force-stop com.steinwurf.adbjoinwifi
 #per il check della rete corrente dopo il cambio rete
