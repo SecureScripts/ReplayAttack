@@ -12,8 +12,11 @@ open_time="10s"
 
 
 
-temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
-MAC_SMARTPHONE="${temp##*$'\n'}"
+#temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
+#MAC_SMARTPHONE="${temp##*$'\n'}"
+MAC_SMARTPHONE=$5
+echo $MAC_SMARTPHONE
+
 filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
 for i in 1
 do

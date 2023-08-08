@@ -14,12 +14,13 @@ sniffing_time=60
 
 
 
-temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
-MAC_SMARTPHONE="${temp##*$'\n'}"
+#temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
+#MAC_SMARTPHONE="${temp##*$'\n'}"
+MAC_SMARTPHONE=$5
 echo $MAC_SMARTPHONE
 
-#filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
-filter="(ether src  $MAC_DEVICE or ether dst $MAC_DEVICE)"
+filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
+#filter="(ether src  $MAC_DEVICE or ether dst $MAC_DEVICE)"
 
 
 EXP_FOLDER="Result/$MAC_DEVICE/Experiments/LocalConnectivity"
@@ -40,3 +41,6 @@ tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$
  wait
 
 python3 CheckLocalConnectivity.py "$EXP_FOLDER/capture.pcap"
+
+
+chmod +r  $EXP_FOLDER/capture.pcap
