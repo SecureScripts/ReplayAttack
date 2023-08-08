@@ -11,13 +11,13 @@ tap_time="5s"
 open_time="10s"
 
 sniffing_time=60
-filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
+
 
 
 temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 MAC_SMARTPHONE="${temp##*$'\n'}"
 
-
+filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 EXP_FOLDER="Result/$MAC_DEVICE/Experiments/LocalConnectivity"
 mkdir -p $EXP_FOLDER
 
