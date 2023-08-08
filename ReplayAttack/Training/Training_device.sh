@@ -1,9 +1,8 @@
 #!/bin/bash
 ANDROID_SERIAL="$1"
-MAC_SMARTPHONE="$2"
-MAC_DEVICE="$3"
-INTERFACE="$4"
-PACKAGE="$5"
+MAC_DEVICE="$2"
+INTERFACE="$3"
+PACKAGE="$4"
 
 
 training_time=300
@@ -12,6 +11,10 @@ open_time="10s"
 
 
 filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
+
+temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
+MAC_SMARTPHONE="${temp##*$'\n'}"
+
 for i in 1
 do
    echo "Experiment $i"

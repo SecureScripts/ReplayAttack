@@ -1,9 +1,8 @@
 #!/bin/bash
-ANDROID_SERIAL="$1"
-MAC_SMARTPHONE="$2"
-MAC_DEVICE="$3"
-INTERFACE="$4"
-PACKAGE="$5"
+ANDROID_SERIAL="$1""
+MAC_DEVICE="$2"
+INTERFACE="$3"
+PACKAGE="$4"
 
 CROP_FUN=$(cat Result/$MAC_DEVICE/Capture/Fun_crop.txt)
 CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
@@ -13,6 +12,10 @@ open_time="10s"
 
 sniffing_time=60
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
+
+
+temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
+MAC_SMARTPHONE="${temp##*$'\n'}"
 
 
 EXP_FOLDER="Result/$MAC_DEVICE/Experiments/LocalConnectivity"
