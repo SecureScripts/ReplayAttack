@@ -1,5 +1,5 @@
 #!/bin/bash
-ANDROID_SERIAL="$1""
+ANDROID_SERIAL="$1"
 MAC_DEVICE="$2"
 INTERFACE="$3"
 PACKAGE="$4"
@@ -16,6 +16,7 @@ sniffing_time=60
 
 temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 MAC_SMARTPHONE="${temp##*$'\n'}"
+echo $MAC_SMARTPHONE
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 EXP_FOLDER="Result/$MAC_DEVICE/Experiments/LocalConnectivity"
