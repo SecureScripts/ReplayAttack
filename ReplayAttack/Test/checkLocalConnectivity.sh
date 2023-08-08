@@ -18,7 +18,10 @@ temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 MAC_SMARTPHONE="${temp##*$'\n'}"
 echo $MAC_SMARTPHONE
 
-filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
+#filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
+filter="(ether src  $MAC_DEVICE or ether dst $MAC_DEVICE)"
+
+
 EXP_FOLDER="Result/$MAC_DEVICE/Experiments/LocalConnectivity"
 mkdir -p $EXP_FOLDER
 
