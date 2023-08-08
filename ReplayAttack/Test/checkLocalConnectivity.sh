@@ -32,11 +32,20 @@ sleep 2s
 
 tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
 
-./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time
+./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun False $tap_time $open_time
+
+sleep 2s
+adb -s $ANDROID_SERIAL shell -n screencap -p /sdcard/screen_exp.png
+adb -s $ANDROID_SERIAL pull /sdcard/screen_exp.png Result/$MAC_DEVICE/Capture/Fun_reference.png
+adb -s $ANDROID_SERIAL shell -n rm /sdcard/screen_exp.png
 
 
-./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
 
+./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse False $tap_time $open_time
+sleep 2s
+adb -s $ANDROID_SERIAL shell -n screencap -p /sdcard/screen_exp.png
+adb -s $ANDROID_SERIAL pull /sdcard/screen_exp.png Result/$MAC_DEVICE/Capture/Reverse_reference.png
+adb -s $ANDROID_SERIAL shell -n rm /sdcard/screen_exp.png
 
  wait
 
