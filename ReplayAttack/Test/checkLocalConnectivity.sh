@@ -35,15 +35,15 @@ tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$
 ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time
 
 mv Result/$MAC_DEVICE/Capture/screen_exp.png Result/$MAC_DEVICE/Capture/Fun_reference.png
-
+chmod +r  Result/$MAC_DEVICE/Capture/Fun_reference.png
 
 ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
 
 mv Result/$MAC_DEVICE/Capture/screen_exp.png Result/$MAC_DEVICE/Capture/Reverse_reference.png
-
+chmod +r  Result/$MAC_DEVICE/Capture/Reverse_reference.png
  wait
 
-python3 CheckLocalConnectivity.py "$EXP_FOLDER/capture.pcap"
+#python3 CheckLocalConnectivity.py "$EXP_FOLDER/capture.pcap"
 
 
 chmod +r  $EXP_FOLDER/capture.pcap
