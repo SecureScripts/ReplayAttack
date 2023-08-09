@@ -39,6 +39,8 @@ adb -s $ANDROID_SERIAL shell am force-stop com.steinwurf.adbjoinwifi
 new_SSID=$(adb -s $ANDROID_SERIAL shell dumpsys wifi | grep "current SSID")
 echo $new_SSID
 #to see if there is an ip address
+sleep 5s
+
 check=$(adb -s $ANDROID_SERIAL shell ip address show wlan0 | grep "inet ")
 echo $check
 #per trovare il mac
