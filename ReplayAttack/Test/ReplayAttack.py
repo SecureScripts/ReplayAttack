@@ -41,14 +41,18 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import HashingVectorizer, CountVectorizer, TfidfTransformer
 import pickle
 
-clf_svm = pickle.load(open(path_Models+ "/svm.sav", 'rb'))
-clf_if = pickle.load(open(path_Models + "/if.sav", 'rb'))
-clf_ee = pickle.load(open(path_Models + "/ee.sav", 'rb'))
-clf_lo = pickle.load(open(path_Models+ "/lo.sav", 'rb'))
-clf_cc = pickle.load(open(path_Models+"/cc.sav", 'rb'))
+try:
+    clf_svm = pickle.load(open(path_Models+ "/svm.sav", 'rb'))
+    clf_if = pickle.load(open(path_Models + "/if.sav", 'rb'))
+    clf_ee = pickle.load(open(path_Models + "/ee.sav", 'rb'))
+    clf_lo = pickle.load(open(path_Models+ "/lo.sav", 'rb'))
+    clf_cc = pickle.load(open(path_Models+"/cc.sav", 'rb'))
+    f = open(path_Models + "/feature_num.txt", "r")
+    max_num_features = int(f.read())
+except:
+    print("Models not found")
 
-f = open(path_Models+ "/feature_num.txt", "r")
-max_num_features = int(f.read())
+
 
 
 def tokenizeText(sample):
@@ -149,6 +153,7 @@ def attack():
     # NUOVO!!!
     # response_to_test=findCommandsResponses(responses_to_test)
     ###################################################################################
+    return  #use for test
     count=0
     for clf in [clf_svm, clf_if, clf_ee, clf_lo, clf_cc]:
         if len(responses_to_test) == 0:

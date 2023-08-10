@@ -23,4 +23,10 @@ trap 'python3 get_Coordinates.py $mac_device $name; rm Result/$mac_device/raw_${
 
 adb -s $ANDROID_SERIAL shell getevent -l > Result/$mac_device/raw_${name}_coordinates.txt
 
+if [ "$name" = "Fun" ]; then
+    cp Result/$mac_device/Fun_coordinates.txt Result/$mac_device/Reverse_coordinates.txt
+    cp Result/$mac_device/Fun_coordinates.txt Result/$mac_device/Ground_coordinates.txt
+    sed '$ d' Result/$mac_device/Fun_coordinates.txt > Result/$mac_device/Ground_coordinates.txt
+fi
+
 
