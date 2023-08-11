@@ -10,8 +10,8 @@ CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 tap_time="5s"
 open_time="10s"
 
-sniffing_time=40
-delay_time=10
+sniffing_time=60
+delay_time=20
 
 
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
@@ -40,7 +40,7 @@ do
    
    echo "#############################STARTING SNIFFING#####################################"
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
-
+    sleep 10s
     ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time
 
     wait
