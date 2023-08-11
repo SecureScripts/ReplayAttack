@@ -10,8 +10,8 @@ CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 tap_time="5s"
 open_time="10s"
 
-sniffing_time=20
-delay_time=20
+sniffing_time=40
+delay_time=10
 
 
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
