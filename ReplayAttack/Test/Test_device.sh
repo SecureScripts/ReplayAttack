@@ -51,7 +51,10 @@ do
    echo "#############################STARTING SNIFFING#####################################"
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
     sleep 10s
+
     temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time)
+    wait
+
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
         echo "Experiment Failed"
@@ -59,7 +62,6 @@ do
         continue
         fi
 
-    wait
     sleep 5s
    temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time)
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
