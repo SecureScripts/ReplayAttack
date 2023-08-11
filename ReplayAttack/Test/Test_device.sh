@@ -17,7 +17,7 @@ sniffing_time=20
 #MAC_SMARTPHONE="${temp##*$'\n'}"
 MAC_SMARTPHONE=$5
 
-filter='(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)'
+filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 for i in 1
 do
    echo "Experiment $i"
@@ -45,7 +45,7 @@ do
     wait
     ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
 
-   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE 60 $MODEL_FOLDER > $EXP_FOLDER/res.txt
+   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE 30 $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 
   echo "CHECK GROUND TRUTH"
