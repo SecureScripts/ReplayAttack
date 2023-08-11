@@ -45,5 +45,4 @@ chmod +r  Result/$MAC_DEVICE/Capture/Reverse_reference.png
 
 #python3 CheckLocalConnectivity.py "$EXP_FOLDER/capture.pcap"
 
-
 chmod +r  $EXP_FOLDER/capture.pcap
