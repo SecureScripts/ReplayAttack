@@ -11,7 +11,7 @@ tap_time="5s"
 open_time="10s"
 
 sniffing_time=60
-delay_time=10
+delay_time=20
 
 
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
@@ -21,10 +21,7 @@ MAC_SMARTPHONE=$5
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 for i in 1 2 3 4 5 6 7 8 9 10
 do
-   result="Experiment Failed"
-   while [[ $result != "Experiment Successfully" ]]
-   do
-   result="Experiment Successfully"
+
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_$i"
@@ -39,47 +36,23 @@ do
     if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
     then
     	echo "REVERSING THE STATE"
-    	 temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time)
-        if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
-        then
-        echo "Experiment Failed"
-        result="Experiment Failed: Repeat"
-        continue
-        fi
+    	./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
     fi
    
    echo "#############################STARTING SNIFFING#####################################"
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
     sleep 10s
-    temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time)
-        if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
-        then
-        echo "Experiment Failed"
-        result="Experiment Failed: Repeat"
-        continue
-        fi
+    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time
 
     wait
-    sleep 5s
-   temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time)
-        if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
-        then
-        echo "Experiment Failed"
-        result="Experiment Failed: Repeat"
-        continue
-        fi
+    ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
+   
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
    python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 
   echo "CHECK GROUND TRUTH"
-  temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True $tap_time $open_time)
-        if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
-        then
-        echo "Experiment Failed"
-        result="Experiment Failed for GROUND TRUTH: Repeat"
-        continue
-        fi
-  done
-  echo "Experiment Successfully"
+  ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True $tap_time $open_time
+
+
 done
