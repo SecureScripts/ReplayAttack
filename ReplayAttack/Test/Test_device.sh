@@ -78,8 +78,8 @@ do
   temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True $tap_time $open_time)
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
-        echo "Experiment Failed"
-        result="Experiment Failed for GROUND TRUTH: Repeat"
+        echo "Experiment Failed for GROUND TRUTH: Repeat"
+        result="Experiment Failed"
         continue
         fi
   done
