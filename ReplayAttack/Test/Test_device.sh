@@ -11,6 +11,7 @@ tap_time="5s"
 open_time="10s"
 
 sniffing_time=20
+delay_time=20
 
 
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
@@ -44,8 +45,9 @@ do
 
     wait
     ./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time
-
-   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE 30 $MODEL_FOLDER > $EXP_FOLDER/res.txt
+   
+   echo "#############################STARTING ATTACK AFTER DELAY #####################################"
+   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 
   echo "CHECK GROUND TRUTH"
