@@ -19,7 +19,7 @@ delay_time=10
 MAC_SMARTPHONE=$5
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
-for i in 1 
+for i in 1
 do
    result="Experiment Failed"
    while [[ $result != "Experiment Successfully" ]]
