@@ -153,7 +153,7 @@ def attack():
     # NUOVO!!!
     # response_to_test=findCommandsResponses(responses_to_test)
     ###################################################################################
-    return  #use for test
+    #return  #use for test
     count=0
     for clf in [clf_svm, clf_if, clf_ee, clf_lo, clf_cc]:
         if len(responses_to_test) == 0:

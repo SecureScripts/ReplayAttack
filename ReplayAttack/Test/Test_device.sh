@@ -19,7 +19,7 @@ delay_time=10
 MAC_SMARTPHONE=$5
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
-for i in 1
+for i in {1..5}
 do
    result="Experiment Failed"
    while [[ $result != "Experiment Successfully" ]]
@@ -78,10 +78,12 @@ do
   temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True $tap_time $open_time)
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
-        echo "Experiment Failed for GROUND TRUTH: Replay Attack not working"
-        echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt
+          echo "Experiment Failed for GROUND TRUTH: Replay Attack not working"
+          echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt
         #result="Experiment Failed"
         #continue
+        else
+          echo "Replay Attack working"> $EXP_FOLDER/attackResult.txt
         fi
   done
   echo "Experiment Successfully"

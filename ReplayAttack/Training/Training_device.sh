@@ -18,7 +18,7 @@ MAC_SMARTPHONE=$5
 #echo $MAC_SMARTPHONE
 
 filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
-for i in 1
+for i in {1..5}
 do
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Experiment_$i"
