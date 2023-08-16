@@ -1,4 +1,3 @@
-
 import sys
 import pyshark
 from sklearn.covariance import EllipticEnvelope
@@ -13,13 +12,11 @@ import pickle
 
 from CustomClassifier import CustomClassifier
 
-
-
 capture_path = str(sys.argv[1])
 model_path = str(sys.argv[2])
 
-
 import nltk
+
 nltk.download('punkt')
 
 capture = pyshark.FileCapture(capture_path)
@@ -97,11 +94,9 @@ predicted_labels = clf_cc.predict(payload_set)
 print("Accuracy CC:")
 print(accuracy_score(real_labels, predicted_labels))
 
+print("ThresholdsClusters:" + str(clf_cc.thresholdsCluster))
 
-print("ThresholdsClusters:"+str(clf_cc.thresholdsCluster))
-
-
-f = open(model_path+ "/feature_num.txt", "w")
+f = open(model_path + "/feature_num.txt", "w")
 f.write(str(max_features))
 f.close()
 

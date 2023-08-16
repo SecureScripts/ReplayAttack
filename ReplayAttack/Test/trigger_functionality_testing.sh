@@ -34,7 +34,7 @@ echo "Starting Functionality"
 
 
 waitphone
-adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1 >/dev/null
+adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1 &>/dev/null
 
 sleep $open_time
 
