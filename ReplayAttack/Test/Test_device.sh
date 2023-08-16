@@ -17,14 +17,14 @@ delay_time=10
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 #MAC_SMARTPHONE="${temp##*$'\n'}"
 MAC_SMARTPHONE=$5
-COUNTER=0
+
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 for i in {1..5}
 do
    result="Experiment Failed"
    while [[ $result != "Experiment Successfully" ]]
 
-   let COUNTER=0
+   COUNTER=0
    do
    result="Experiment Successfully"
    echo "Experiment $i"
@@ -98,7 +98,7 @@ do
           echo "Replay Attack working"> $EXP_FOLDER/attackResult.txt
           break
         fi
-  let COUNTER=COUNTER+1
+  COUNTER=$((COUNTER+1))
   done
 
 done
