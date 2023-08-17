@@ -24,7 +24,10 @@ sniffing_time=$((tap_number*5+1+10+10))
 
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
-for i in {1..50}
+START=1
+END=50
+
+for (( c=$START; c<=$END; c++ ))
 do
    result="Experiment Failed"
    COUNTER=0
@@ -106,3 +109,6 @@ do
   done
 
 done
+
+chmod -R 777 Result
+python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Real_Time/" "$END"> Result/$MAC_DEVICE/Experiments/Real_Time/Final_res.txt

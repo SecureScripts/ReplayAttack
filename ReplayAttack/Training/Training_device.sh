@@ -33,3 +33,5 @@ do
    chmod +r "$EXP_FOLDER"/capture.pcap
    python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER"  > $EXP_FOLDER/accuracy.txt
 done
+
+chmod -R 777 Result
