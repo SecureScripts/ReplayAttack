@@ -24,7 +24,7 @@ sniffing_time=$((tap_number*5+1+10+10))
 
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
-for i in {1..30}
+for i in {1..50}
 do
    result="Experiment Failed"
    COUNTER=0
