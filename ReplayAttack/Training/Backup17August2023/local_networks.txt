@@ -1,0 +1,6 @@
+wlan0 iotlab1 iotlab1passwd
+wlan1 iotlab2 iotlab2passwd
+wlan2 iotlab3 iotlab3passwd
+wlan3 iotlab4 iotlab4passwd
+wlan4 iotlab5 iotlab5passwd
+wlan5 iotlab6 iotlab6passwd

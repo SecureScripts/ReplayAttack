@@ -5,21 +5,20 @@ INTERFACE="$3"
 PACKAGE="$4"
 
 
-training_times=5
+training_time=300
 tap_time="5s"
 open_time="10s"
 
-tap_number=$(wc -l < ../Test/Result/$MAC_DEVICE/Fun_coordinates.txt)
-tshark_time=$((tap_number*5+1+10+10))
-tshark_time=$((tshark_time*training_times*2))
-echo $tshark_time
+
+
+
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 #MAC_SMARTPHONE="${temp##*$'\n'}"
 MAC_SMARTPHONE=$5
 #echo $MAC_SMARTPHONE
 
 filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
-for i in 1
+for i in {1..30}
 do
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Experiment_$i"
@@ -27,8 +26,8 @@ do
    
    adb -s "$ANDROID_SERIAL" shell input keyevent 224
    sleep 2s
-    tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$tshark_time" &
-   ./trigger_functionality_training.sh "$ANDROID_SERIAL" "$PACKAGE" $training_times $tap_time $open_time $MAC_DEVICE
+    tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$training_time" &
+   ./trigger_functionality_training.sh "$ANDROID_SERIAL" "$PACKAGE" $training_time $tap_time $open_time $MAC_DEVICE
    wait
    chmod +r "$EXP_FOLDER"/capture.pcap
    python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER"  > $EXP_FOLDER/accuracy.txt

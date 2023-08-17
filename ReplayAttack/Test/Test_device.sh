@@ -30,7 +30,7 @@ do
    result="Experiment Successfully"
    echo "Experiment $i"
    EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
-   MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_$i"
+   MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_1"
    mkdir -p $EXP_FOLDER
    
    adb -s $ANDROID_SERIAL shell input keyevent 224 
@@ -84,7 +84,7 @@ do
           COUNTER=$((COUNTER+1))
           echo "Experiment Failed for GROUND TRUTH: Repeat: $COUNTER"
           result="Experiment Failed"
-          if [[ "$COUNTER" -gt 2 ]]
+          if [[ "$COUNTER" -gt 3 ]]
           then
             echo "Replay Attack NOT working."
             echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt

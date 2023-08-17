@@ -21,7 +21,7 @@ PACKAGE="$2"
 
 
 
-training_times="$3"
+training_time="$3"
 
 tap_time="$4"
 
@@ -33,13 +33,9 @@ CROP_FUN=$(cat ../Test/Result/$MAC_DEVICE/Capture/Fun_crop.txt)
 CROP_REVERSE=$(cat ../Test/Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 
 
-#end=$((SECONDS+$training_time))
-#while  [ $SECONDS -lt $end ]; do
-START=1
-END=$training_times
+end=$((SECONDS+$training_time))
+while  [ $SECONDS -lt $end ]; do
 
-for (( c=$START; c<=$END; c++ ))
-do
 temp=$(../Test/trigger_functionality_testing.sh "$ANDROID_SERIAL" "$PACKAGE" "../Test/Result/$MAC_DEVICE/Capture" $CROP_FUN "../Test/Result/$MAC_DEVICE/Fun_coordinates.txt" Fun True $tap_time $open_time)
  if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
