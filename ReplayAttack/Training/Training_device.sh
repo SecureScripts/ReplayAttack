@@ -29,5 +29,6 @@ do
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$training_time" &
    ./trigger_functionality_training.sh "$ANDROID_SERIAL" "$PACKAGE" $training_time $tap_time $open_time $MAC_DEVICE
    wait
+   chmod +r "$EXP_FOLDER"/capture.pcap
    python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER"  > $EXP_FOLDER/accuracy.txt
 done

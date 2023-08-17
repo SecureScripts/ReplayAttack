@@ -22,9 +22,10 @@ filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MA
 for i in {1..5}
 do
    result="Experiment Failed"
+   COUNTER=0
    while [[ $result != "Experiment Successfully" ]]
 
-   COUNTER=0
+
    do
    result="Experiment Successfully"
    echo "Experiment $i"
@@ -56,7 +57,7 @@ do
 
     temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time)
     wait
-
+    chmod +r "$EXP_FOLDER"/capture.pcap
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
         echo "Experiment Failed"
@@ -80,9 +81,10 @@ do
   temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Ground_coordinates.txt Fun True $tap_time $open_time)
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
+          COUNTER=$((COUNTER+1))
           echo "Experiment Failed for GROUND TRUTH: Repeat: $COUNTER"
           result="Experiment Failed"
-          if [[ "$counter" -gt 2 ]]
+          if [[ "$COUNTER" -gt 2 ]]
           then
             echo "Replay Attack NOT working."
             echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt
@@ -90,15 +92,12 @@ do
           else
             continue
           fi
-
-
-
         else
           echo "Experiment Successfully"
           echo "Replay Attack working"> $EXP_FOLDER/attackResult.txt
           break
         fi
-  COUNTER=$((COUNTER+1))
+
   done
 
 done
