@@ -27,7 +27,7 @@ filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MA
 START=1
 END=50
 
-for (( c=$START; c<=$END; c++ ))
+for (( i=$START; i<=$END; i++ ))
 do
    result="Experiment Failed"
    COUNTER=0
