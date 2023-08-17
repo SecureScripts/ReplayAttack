@@ -10,13 +10,18 @@ CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 tap_time="5s"
 open_time="10s"
 
-sniffing_time=60
+
 delay_time=10
 
 
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 #MAC_SMARTPHONE="${temp##*$'\n'}"
 MAC_SMARTPHONE=$5
+
+tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
+sniffing_time=$((tap_number*5+1+10+10))
+
+
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 for i in {1..30}
