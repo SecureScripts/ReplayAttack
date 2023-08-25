@@ -86,6 +86,6 @@ print("Correct Detections CC="+str(correct_detection_cc))
 
 print("Accuracy SVM="+str(correct_detection_svm/n_tests))
 print("AccuracyIF="+str(correct_detection_if/n_tests))
-print("CAccuracy EE="+str(correct_detection_ee/n_tests))
+print("Accuracy EE="+str(correct_detection_ee/n_tests))
 print("Accuracy LO="+str(correct_detection_lo/n_tests))
 print("Accuracy CC="+str(correct_detection_cc/n_tests))
