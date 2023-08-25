@@ -9,8 +9,6 @@ CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 
 tap_time="5s"
 open_time="10s"
-
-
 delay_time=10
 
 
