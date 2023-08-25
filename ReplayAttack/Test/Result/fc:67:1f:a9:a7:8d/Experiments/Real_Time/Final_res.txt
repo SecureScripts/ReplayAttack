@@ -5,6 +5,6 @@ Correct Detections LO=50
 Correct Detections CC=50
 Accuracy SVM=0.0
 AccuracyIF=1.0
-CAccuracy EE=0.88
+Accuracy EE=0.88
 Accuracy LO=1.0
 Accuracy CC=1.0
