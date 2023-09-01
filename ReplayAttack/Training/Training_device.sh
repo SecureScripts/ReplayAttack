@@ -20,7 +20,6 @@ MAC_SMARTPHONE=$5
 
 iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
 
-
 filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
 for i in 1
 do
