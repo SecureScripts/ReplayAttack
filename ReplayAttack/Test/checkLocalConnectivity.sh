@@ -19,6 +19,9 @@ sniffing_time=60
 MAC_SMARTPHONE=$5
 echo $MAC_SMARTPHONE
 
+iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
+
+
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 #filter="(ether src  $MAC_DEVICE or ether dst $MAC_DEVICE)"
 
@@ -46,3 +49,5 @@ chmod +r  Result/$MAC_DEVICE/Capture/Reverse_reference.png
 #python3 CheckLocalConnectivity.py "$EXP_FOLDER/capture.pcap"
 
 chmod +r  $EXP_FOLDER/capture.pcap
+
+iptables -D FORWARD 1
