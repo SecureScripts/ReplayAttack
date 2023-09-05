@@ -16,12 +16,12 @@ delay_time=10
 #MAC_SMARTPHONE="${temp##*$'\n'}"
 MAC_SMARTPHONE=$5
 
-temp_target_ip_address=$(arp -a | grep $MAC_DEVICE | awk '{print $2}')
-let len=${#temp_target_ip_address}-1
-IP_DEVICE=$(cut -c 2-$len <<< $temp_target_ip_address)
-iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
-iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
-trap 'iptables -D FORWARD 2; iptables -D FORWARD 1' SIGINT
+#temp_target_ip_address=$(arp -a | grep $MAC_DEVICE | awk '{print $2}')
+#let len=${#temp_target_ip_address}-1
+#IP_DEVICE=$(cut -c 2-$len <<< $temp_target_ip_address)
+#iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
+#iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
+#trap 'iptables -D FORWARD 2; iptables -D FORWARD 1' SIGINT
 
 tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
 sniffing_time=$((tap_number*5+1+10+10))
@@ -118,5 +118,5 @@ done
 chmod -R 777 Result
 python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Real_Time/" "$END"> Result/$MAC_DEVICE/Experiments/Real_Time/Final_res.txt
 
-iptables -D FORWARD 2
-iptables -D FORWARD 1
+#iptables -D FORWARD 2
+#iptables -D FORWARD 1
