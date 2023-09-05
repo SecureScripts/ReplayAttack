@@ -96,7 +96,7 @@ def attack():
         buffer_size = len(list_responses[0])
         for r in list_responses:
             if len(r) > buffer_size:
-                buffer_size = len(r)
+                buffer_size = len(r)//2
 
         buffer_size = pow(2, math.ceil(math.log2(buffer_size)))
 
@@ -112,9 +112,10 @@ def attack():
         for r in list_requests:
             received_payload = ''
             payload = r
-            socket_used.send(payload.encode('ISO-8859-1'))  # ISO-8859-1
+            #socket_used.send(payload.encode('ISO-8859-1'))  # ISO-8859-1
+            socket_used.send(bytes.fromhex(payload))
             # time.sleep(2) #2 secondi
-            print('sent payload=' + payload)
+            print('sent payload=' + bytes.fromhex(payload).decode("ISO-8859-1"))
             print('****************************************************************')
 
             try:  # TIMEOUT PER LA RICEZIONE
@@ -204,9 +205,9 @@ for packet in capture:
         if len(payload) == 0:
             continue
 
-        payload = bytes.fromhex(payload).decode('ISO-8859-1')
-
-        print(payload)
+        #payload = bytes.fromhex(payload).decode('ISO-8859-1')
+        #print(payload)
+        print(bytes.fromhex(payload).decode('ISO-8859-1'))
 
         if str(packet.eth._all_fields['eth.src']) == str(mac_app) and str(packet.eth._all_fields['eth.dst']) == str(mac_device):
 

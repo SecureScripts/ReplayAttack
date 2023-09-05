@@ -97,7 +97,7 @@ do
           COUNTER=$((COUNTER+1))
           echo "Experiment Failed for GROUND TRUTH: Repeat: $COUNTER"
           result="Experiment Failed"
-          if [[ "$COUNTER" -gt 3 ]]
+          if [[ "$COUNTER" -gt 0 ]]
           then
             echo "Replay Attack NOT working."
             echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt
