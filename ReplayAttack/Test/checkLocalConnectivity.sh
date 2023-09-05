@@ -17,10 +17,13 @@ sniffing_time=60
 #temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
 #MAC_SMARTPHONE="${temp##*$'\n'}"
 MAC_SMARTPHONE=$5
-echo $MAC_SMARTPHONE
 
+
+temp_target_ip_address=$(arp -a | grep $target_mac_address | awk '{print $2}')let len=${#temp_target_ip_address}-1
+IP_DEVICE=$(cut -c 2-$len <<< $temp_target_ip_address)
 iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
-
+iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
+trap 'iptables -D FORWARD 2; iptables -D FORWARD 1' SIGINT
 
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 #filter="(ether src  $MAC_DEVICE or ether dst $MAC_DEVICE)"
@@ -50,4 +53,5 @@ chmod +r  Result/$MAC_DEVICE/Capture/Reverse_reference.png
 
 chmod +r  $EXP_FOLDER/capture.pcap
 
+iptables -D FORWARD 2
 iptables -D FORWARD 1
