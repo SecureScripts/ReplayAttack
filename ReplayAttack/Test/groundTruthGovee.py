@@ -64,7 +64,7 @@ try:
     while True:
         if sockClient.recv:
             r=sockClient.recv(10240)
-            status=json.loads(sockClient.recv(10240).decode("utf-8"))["data"]["onOff"]
+            status=json.loads(r.decode("utf-8"))["data"]["onOff"]
             if(str(status)=="0"):
                 print("Replay Attack NOT working")
             else:
