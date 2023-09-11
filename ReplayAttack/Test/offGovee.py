@@ -15,22 +15,24 @@ sock.settimeout(2)
 # local network segment.
 ttl = struct.pack('b', 1)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+
+
+UDP_IP = "10.10.0.1"
+UDP_PORT = 4002
+sockClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+sockClient.bind((UDP_IP, UDP_PORT))
+
 try:
     # Send data to the multicast group
     print('sending "%s"' % message)
     sent = sock.sendto(message.encode("UTF-8"), multicast_group)
-
-    # Look for responses from all recipients
     while True:
-        print('waiting to receive')
-        try:
-            data, server = sock.recvfrom(1024)
-        except socket.timeout:
-            print('timed out, no more responses')
-            break
-        else:
-            print('received "%s" from %s' % (data, server))
+        data, addr = sockClient.recvfrom(1024)  # buffer size is 1024 bytes
+        print("received message: %s" % data)
 
 finally:
     print('closing socket')
     sock.close()
+
+
+
