@@ -1,4 +1,6 @@
 import json,time,socket,struct
+import sys
+
 
 
 message = {
@@ -10,14 +12,13 @@ message = {
     }
 }
 
-offMessage= {
-                "msg":{
-                    "cmd":"turn",
-                    "data":{
-                        "value":0,
-                    }
-                }
-            }
+statusMessage= {
+  "msg": {
+    "cmd": "devStatus",
+    "data": {
+    }
+  }
+}
 
 
 group = "239.255.255.250"
@@ -34,7 +35,7 @@ sock.setsockopt(socket.IPPROTO_IP,
                 ttl)
 jsonResult = json.dumps(message)
 
-jsonResultOff = json.dumps(offMessage)
+jsonResultStatus = json.dumps(statusMessage)
 
 
 
@@ -55,22 +56,22 @@ sockClient.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 try:
     sock.bind(("10.10.0.1", 60000))
-    print("Sending: " + jsonResult)
     sock.sendto(bytes(jsonResult, "utf-8"), (group, port))
     while True:
-        print("Listening on {}".format(MCAST_PORT))
         if sockClient.recv:
-            print(sockClient.recv(10240))
             break
-    sockClient.sendto(bytes(jsonResultOff, "utf-8"), ("10.10.0.22", 4003))
+    sockClient.sendto(bytes(jsonResultStatus, "utf-8"), ("10.10.0.22", 4003))
     while True:
-        print("Listening on {}".format(MCAST_PORT))
         if sockClient.recv:
-            print(sockClient.recv(10240))
+            r=sockClient.recv(10240)
+            status=json.loads(sockClient.recv(10240).decode("utf-8"))["data"]["onOff"]
+            if(str(status)=="0"):
+                print("Replay Attack NOT working")
+            else:
+                print("Replay Attack working")
             break
 
 finally:
-    print('closing socket')
     sock.close()
 
 

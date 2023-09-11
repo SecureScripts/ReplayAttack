@@ -39,19 +39,19 @@ do
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_1"
    mkdir -p $EXP_FOLDER
    
-   sonos control RINCON_38420B68763001400 pause --ip=10.10.0.15
+   python3 statusGovee.py "0"
 sleep 3s
    
    echo "#############################STARTING SNIFFING#####################################"
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
     sleep 20s
 
-    sonos control RINCON_38420B68763001400 play --ip=10.10.0.15
+    python3 statusGovee.py "1"
     wait
 
     sleep 5s
 
-   sonos control RINCON_38420B68763001400 pause --ip=10.10.0.15
+   python3 statusGovee.py "0"
 sleep 3s
 
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
@@ -59,17 +59,10 @@ sleep 3s
 
 sleep 10s
 
-status=$(sonos control RINCON_38420B68763001400 pause --ip=10.10.0.15)
-echo $status
-if [[ $status == "SonosError: Sonos error on Pause UPnPError 701 (Transition not available)" ]]
-then
-    echo "Replay Attack NOT working."
-    echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt
-else
-  echo "Replay Attack working."
-  echo "Replay Attack working"> $EXP_FOLDER/attackResult.txt
-fi
+echo "#############################CHECK GROUND TRUTH #####################################"
 
+status=$(python3 statusGovee.py "0")
+echo $status > $EXP_FOLDER/attackResult.txt
 sleep 3s
 
 done
