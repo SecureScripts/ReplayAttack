@@ -62,7 +62,7 @@ try:
         if sockClient.recv:
             print(sockClient.recv(10240))
             break
-    sockClient.send(bytes(jsonResultOff, "utf-8"), ("10.10.0.22", 4003))
+    sockClient.sendto(bytes(jsonResultOff, "utf-8"), ("10.10.0.22", 4003))
     while True:
         print("Listening on {}".format(MCAST_PORT))
         if sockClient.recv:
