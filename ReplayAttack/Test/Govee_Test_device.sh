@@ -55,7 +55,7 @@ sleep 3s
 sleep 3s
 
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
-   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
+   python3 Goove_ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 sleep 10s
 
