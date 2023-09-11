@@ -73,6 +73,7 @@ try:
 
 finally:
     sock.close()
+    sockClient.close()
 
 
 
