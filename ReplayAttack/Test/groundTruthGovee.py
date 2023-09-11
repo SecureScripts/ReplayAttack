@@ -21,18 +21,18 @@ statusMessage= {
 }
 
 
-group = "239.255.255.250"
-port = 4001
+#group = "239.255.255.250"
+#port = 4001
 # 2-hop restriction in network
-ttl = 2
-sock = socket.socket(socket.AF_INET,
-                     socket.SOCK_DGRAM,
-                     socket.IPPROTO_UDP)
+#ttl = 2
+#sock = socket.socket(socket.AF_INET,
+#                     socket.SOCK_DGRAM,
+#                     socket.IPPROTO_UDP)
 
 
-sock.setsockopt(socket.IPPROTO_IP,
-                socket.IP_MULTICAST_TTL,
-                ttl)
+#sock.setsockopt(socket.IPPROTO_IP,
+#                socket.IP_MULTICAST_TTL,
+#                ttl)
 jsonResult = json.dumps(message)
 
 jsonResultStatus = json.dumps(statusMessage)
@@ -55,11 +55,11 @@ sockClient.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 
 try:
-    sock.bind(("10.10.0.1", 60000))
-    sock.sendto(bytes(jsonResult, "utf-8"), (group, port))
-    while True:
-        if sockClient.recv:
-            break
+ #   sock.bind(("10.10.0.1", 60000))
+ #   sock.sendto(bytes(jsonResult, "utf-8"), (group, port))
+ #   while True:
+ #       if sockClient.recv:
+ #           break
     sockClient.sendto(bytes(jsonResultStatus, "utf-8"), ("10.10.0.22", 4003))
     while True:
         if sockClient.recv:
@@ -72,7 +72,7 @@ try:
             break
 
 finally:
-    sock.close()
+   # sock.close()
     sockClient.close()
 
 
