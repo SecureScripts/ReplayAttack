@@ -17,7 +17,7 @@ time.sleep(2)
 
 stat=str(sys.argv[1])
 
-device = soundtouch_device('10.12.0.27')
+device = soundtouch_device('10.12.0.27',8091)
 
 
 
