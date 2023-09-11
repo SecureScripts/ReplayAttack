@@ -1,4 +1,5 @@
 import sys
+import time
 
 from libsoundtouch import soundtouch_device
 from libsoundtouch.utils import Source, Type
@@ -12,6 +13,7 @@ for device in devices:
     print(device.config.name + " - " + device.config.type)
 
 
+time.sleep(2)
 
 stat=str(sys.argv[1])
 
@@ -27,6 +29,7 @@ if(stat=="off"):
   device.power_off()
 
 
+time.sleep(2)
 # Status object
 # device.status() will do an HTTP request. Try to cache this value if needed.
 status = device.status()
