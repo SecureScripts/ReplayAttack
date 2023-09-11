@@ -38,25 +38,25 @@ do
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$tshark_time" &
     sleep 20s
 
-python3 ../Test/statusGoove.py "0"
+python3 ../Test/statusGovee.py "0"
     sleep 5s
-    python3 ../Test/statusGoove.py "1"
+    python3 ../Test/statusGovee.py "1"
 sleep 5s
-python3 ../Test/statusGoove.py "0"
+python3 ../Test/statusGovee.py "0"
     sleep 5s
-    python3 ../Test/statusGoove.py "1"
+    python3 ../Test/statusGovee.py "1"
 sleep 5s
-python3 ../Test/statusGoove.py "0"
+python3 ../Test/statusGovee.py "0"
     sleep 5s
-    python3 ../Test/statusGoove.py "1"
+    python3 ../Test/statusGovee.py "1"
 sleep 5s
-python3 ../Test/statusGoove.py "0"
+python3 ../Test/statusGovee.py "0"
     sleep 5s
-    python3 ../Test/statusGoove.py "1"
+    python3 ../Test/statusGovee.py "1"
 sleep 5s
-python3 ../Test/statusGoove.py "0"
+python3 ../Test/statusGovee.py "0"
     sleep 5s
-    python3 ../Test/statusGoove.py "1"
+    python3 ../Test/statusGovee.py "1"
 sleep 5s
 
    wait
