@@ -1,0 +1,13 @@
+AUTOMATIC DETECTION FAILED
+AUTOMATIC DETECTION FAILED
+AUTOMATIC DETECTION FAILED
+Correct Detections SVM=0
+Correct Detections IF=47
+Correct Detections EE=47
+Correct Detections LO=47
+Correct Detections CC=47
+Accuracy SVM=0.0
+AccuracyIF=0.94
+Accuracy EE=0.94
+Accuracy LO=0.94
+Accuracy CC=0.94
