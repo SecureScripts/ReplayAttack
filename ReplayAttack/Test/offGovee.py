@@ -1,20 +1,31 @@
-import socket
-import struct
-import sys
+import json,time,socket,struct
 
-message = '{"msg": {"cmd": "scan","data": {"account_topic": "reserve"}}}'
-multicast_group = ('239.255.255.250', 4001)
 
-# Create the datagram socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+message = {
+    "msg":{
+        "cmd":"scan",
+        "data":{
+            "account_topic":"reserve",
+        }
+    }
+}
 
-# Set a timeout so the socket does not block indefinitely when trying
-# to receive data.
-sock.settimeout(2)
-# Set the time-to-live for messages to 1 so they do not go past the
-# local network segment.
-ttl = struct.pack('b', 1)
-sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+group = "239.255.255.250"
+port = 4001
+# 2-hop restriction in network
+ttl = 2
+sock = socket.socket(socket.AF_INET,
+                     socket.SOCK_DGRAM,
+                     socket.IPPROTO_UDP)
+sock.setsockopt(socket.IPPROTO_IP,
+                socket.IP_MULTICAST_TTL,
+                ttl)
+jsonResult = json.dumps(message)
+
+
+
+
+
 
 
 MCAST_GRP = "239.255.255.250"
@@ -28,11 +39,9 @@ mreq = struct.pack("4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
 sockClient.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 
-
 try:
-    # Send data to the multicast group
-    print('sending "%s"' % message)
-    sent = sock.sendto(message.encode("UTF-8"), multicast_group)
+    print("Sending: " + jsonResult)
+    sock.sendto(bytes(jsonResult, "utf-8"), (group, port))
     while True:
         print("Listening on {}".format(MCAST_PORT))
         if sockClient.recv:
