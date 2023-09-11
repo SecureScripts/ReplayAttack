@@ -13,10 +13,11 @@ import os
 
 
 class Flow:
-    def __init__(self, transport_layer, dst_ip, dst_port, list_requests: list, list_responses: list):
+    def __init__(self, transport_layer, dst_ip, dst_port, src_port, list_requests: list, list_responses: list):
         self.transport_layer = transport_layer
         self.dst_ip = dst_ip
         self.dst_port = dst_port
+        self.src_port = src_port
         self.list_requests = list_requests
         self.list_responses = list_responses
 
@@ -103,9 +104,11 @@ def attack():
         socket_used = None
         if f.transport_layer == 'TCP':
             socket_used = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            socket_used.bind(("",int(f.src_port)))
             socket_used.connect((f.dst_ip, int(f.dst_port)))
         if f.transport_layer == 'UDP':
             socket_used = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            socket_used.bind(("", int(f.src_port)))
             socket_used.connect((f.dst_ip, int(f.dst_port)))
         socket_used.settimeout(2)
 
@@ -147,7 +150,7 @@ def attack():
                 print('REPLAY ATTACK NOT WORKED: GENERIC ERROR')
 
                 continue
-
+        socket_used.close()
 
         # COME HA SUCCESSO IL REPLAY ATTACK? VERIFICO SE MI ARRIVA LA RISPOSTA OPPURE VERIFICO SE QUELLA CHE MI ARRIVA è UGUALE A QUELLA CHE HO
 
@@ -214,7 +217,7 @@ for packet in capture:
 
             if not request:
                 request = True
-                flow = Flow(packet.transport_layer, packet.ip.dst, packet[packet.transport_layer].dstport, [], [])
+                flow = Flow(packet.transport_layer, packet.ip.dst, packet[packet.transport_layer].dstport, packet[packet.transport_layer].srcport, [], [])
                 flow.list_requests.append(payload)
                 list_flows.append(flow)
             else:
