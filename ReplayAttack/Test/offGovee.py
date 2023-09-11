@@ -10,6 +10,16 @@ message = {
     }
 }
 
+offMessage= {
+                "msg":{
+                    "cmd":"turn",
+                    "data":{
+                        "value":0,
+                    }
+                }
+            }
+
+
 group = "239.255.255.250"
 port = 4001
 # 2-hop restriction in network
@@ -23,6 +33,8 @@ sock.setsockopt(socket.IPPROTO_IP,
                 socket.IP_MULTICAST_TTL,
                 ttl)
 jsonResult = json.dumps(message)
+
+jsonResultOff = json.dumps(offMessage)
 
 
 
@@ -50,6 +62,13 @@ try:
         if sockClient.recv:
             print(sockClient.recv(10240))
             break
+    sockClient.send(bytes(jsonResultOff, "utf-8"), ("10.10.0.22", 4003))
+    while True:
+        print("Listening on {}".format(MCAST_PORT))
+        if sockClient.recv:
+            print(sockClient.recv(10240))
+            break
+
 finally:
     print('closing socket')
     sock.close()
