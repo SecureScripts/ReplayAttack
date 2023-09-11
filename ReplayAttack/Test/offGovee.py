@@ -17,6 +17,8 @@ ttl = 2
 sock = socket.socket(socket.AF_INET,
                      socket.SOCK_DGRAM,
                      socket.IPPROTO_UDP)
+
+
 sock.setsockopt(socket.IPPROTO_IP,
                 socket.IP_MULTICAST_TTL,
                 ttl)
@@ -40,6 +42,7 @@ sockClient.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 
 try:
+    sock.bind(("10.10.0.1", 60000))
     print("Sending: " + jsonResult)
     sock.sendto(bytes(jsonResult, "utf-8"), (group, port))
     while True:
