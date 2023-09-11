@@ -62,6 +62,7 @@ sleep 10s
 echo "#############################CHECK GROUND TRUTH #####################################"
 
 status=$(python3 statusGovee.py "0")
+echo $status
 echo $status > $EXP_FOLDER/attackResult.txt
 sleep 3s
 

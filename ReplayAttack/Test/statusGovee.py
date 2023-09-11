@@ -1,4 +1,5 @@
 import json,time,socket,struct
+import os
 import sys
 
 status=int(sys.argv[1])
@@ -22,6 +23,15 @@ offMessage= {
             }
 
 
+statusMessage= {
+  "msg": {
+    "cmd": "devStatus",
+    "data": {
+    }
+  }
+}
+
+
 group = "239.255.255.250"
 port = 4001
 # 2-hop restriction in network
@@ -37,6 +47,7 @@ sock.setsockopt(socket.IPPROTO_IP,
 jsonResult = json.dumps(message)
 
 jsonResultOff = json.dumps(offMessage)
+jsonResultStatus = json.dumps(statusMessage)
 
 
 
@@ -65,6 +76,8 @@ try:
             print(sockClient.recv(10240))
             break
     sockClient.sendto(bytes(jsonResultOff, "utf-8"), ("10.10.0.22", 4003))
+    time.sleep(2)
+    sockClient.sendto(bytes(jsonResultStatus, "utf-8"), ("10.10.0.22", 4003))
 
 finally:
     print('closing socket')
