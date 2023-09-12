@@ -104,11 +104,11 @@ def attack():
         socket_used = None
         if f.transport_layer == 'TCP':
             socket_used = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            socket_used.bind(("",int(f.src_port)))
+            #socket_used.bind(("",int(f.src_port)))
             socket_used.connect((f.dst_ip, int(f.dst_port)))
         if f.transport_layer == 'UDP':
             socket_used = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            socket_used.bind(("", int(f.src_port)))
+            #socket_used.bind(("", int(f.src_port)))
             socket_used.connect((f.dst_ip, int(f.dst_port)))
         socket_used.settimeout(2)
 

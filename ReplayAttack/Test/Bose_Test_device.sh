@@ -27,7 +27,7 @@ tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
 sniffing_time=$((25))
 
 
-filter="(ether src  $MAC_DEVICE and dst host 10.10.0.1) or (ether dst $MAC_DEVICE and src host 10.10.0.1)"
+filter="(ether src  $MAC_DEVICE and dst host 10.12.0.1) or (ether dst $MAC_DEVICE and src host 10.12.0.1)"
 START=1
 END=1
 
@@ -63,7 +63,7 @@ sleep 10s
     echo "##############################CHECK GROUND TRUTH#######################################"
 status=$(upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/GetVolumeDB InstanceID=0 Channel=Master)
 echo $status
-if [[ $status == "*\"CurrentVolume\": 3"* ]]
+if [[ $status == *"\"CurrentVolume\": 3"* ]]
 then
     echo "Replay Attack working."
     echo "Replay Attack working"> $EXP_FOLDER/attackResult.txt
