@@ -39,7 +39,7 @@ do
    ./trigger_functionality_training.sh "$ANDROID_SERIAL" "$PACKAGE" $training_times $tap_time $open_time $MAC_DEVICE
    wait
    chmod +r "$EXP_FOLDER"/capture.pcap
-   python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER" $MAC_SMARTPHONE $MAC_DEVICE  > $EXP_FOLDER/accuracy.txt
+   python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER"  > $EXP_FOLDER/accuracy.txt
 done
 
 chmod -R 777 Result

@@ -25,8 +25,7 @@ MAC_SMARTPHONE=$5
 #iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
 #trap 'iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP; iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE' SIGINT
 
-
-filter="(ether src  $MAC_DEVICE and dst host 10.12.0.1)"
+filter="(ether src  $MAC_DEVICE and dst host 10.12.0.1) or (ether dst $MAC_DEVICE and src host 10.12.0.1)"
 
 for i in 1
 do
@@ -62,7 +61,7 @@ sleep 5s
 
    wait
    chmod +r "$EXP_FOLDER"/capture.pcap
-   python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER"  > $EXP_FOLDER/accuracy.txt
+   python3 TrainingReplay.py "$EXP_FOLDER/capture.pcap" "$EXP_FOLDER" $MAC_SMARTPHONE $MAC_DEVICE  > $EXP_FOLDER/accuracy.txt
 done
 
 chmod -R 777 Result
