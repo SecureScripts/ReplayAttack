@@ -58,6 +58,7 @@ def training():
             for r in f.list_responses:
                 aggregated_response=aggregated_response+r
             payload = bytes.fromhex(aggregated_response).decode('ISO-8859-1')
+            payload = payload.replace("/", "").replace("+", "")
             payload_set.append(payload)
             l = len(tokenizeText(payload))
             if l > max_features:
@@ -65,6 +66,7 @@ def training():
         else:
             for r in f.list_responses:
                 payload = bytes.fromhex(r).decode('ISO-8859-1')
+                payload = payload.replace("/", "").replace("+", "")
                 payload_set.append(payload)
                 l = len(tokenizeText(payload))
                 if l > max_features:
@@ -145,7 +147,7 @@ for packet in capture:
 
         #payload = bytes.fromhex(payload).decode('ISO-8859-1')
         #print(payload)
-        print(bytes.fromhex(payload).decode('ISO-8859-1'))
+        #print(bytes.fromhex(payload).decode('ISO-8859-1'))
 
         if str(packet.eth._all_fields['eth.src']) == str(mac_app) and str(packet.eth._all_fields['eth.dst']) == str(mac_device):
 
