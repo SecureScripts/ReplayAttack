@@ -50,6 +50,7 @@ max_features = 0
 
 ############################################################################################################################
 def training():
+    global max_features
     #aggrega risposte dei flussi tcp (if any)
     for f in list_flows:
         if f.transport_layer == 'TCP':
