@@ -36,32 +36,26 @@ for (( i=$START; i<=$END; i++ ))
 do
    
    echo "Experiment $i"
-   EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
+   EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Delayed/Experiment_$i"
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_1"
    mkdir -p $EXP_FOLDER
    
    upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/SetVolumeDB InstanceID=0 Channel=Master DesiredVolume=0
-sleep 3s
-   
-   echo "#############################STARTING SNIFFING#####################################"
-    tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
-    sleep 20s
-
-    upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/SetVolumeDB InstanceID=0 Channel=Master DesiredVolume=3
-    wait
-
-    sleep 5s
-
-
-    ./Restart_device.sh $PLUG_NAME
-
-
-   upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/SetVolumeDB InstanceID=0 Channel=Master DesiredVolume=0
    sleep 3s
+   
+ #   echo "#############################STARTING SNIFFING#####################################"
+ #   tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
+ #   sleep 20s
+ #   upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/SetVolumeDB InstanceID=0 Channel=Master DesiredVolume=3
+ #   wait
+ #   sleep 5s
+ #   ./Restart_device.sh $PLUG_NAME
+ #   upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/SetVolumeDB InstanceID=0 Channel=Master DesiredVolume=0
+ #   sleep 3s
 
 
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
-   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
+   python3 ReplayAttack.py Result/$MAC_DEVICE/Experiments/Delayed/Experiment_1/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 sleep 10s
 
@@ -82,7 +76,7 @@ sleep 3s
 done
 
 chmod -R 777 Result
-python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Real_Time/" "$END"> Result/$MAC_DEVICE/Experiments/Real_Time/Final_res.txt
+python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Delayed/" "$END"> Result/$MAC_DEVICE/Experiments/Delayed/Final_res.txt
 
 #iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
 #iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
