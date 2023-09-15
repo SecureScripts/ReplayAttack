@@ -4,8 +4,8 @@ MAC_DEVICE="$2"
 INTERFACE="$3"
 PACKAGE="$4"
 
-CROP_FUN=$(cat Result/$MAC_DEVICE/Capture/Fun_crop.txt)
-CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
+#CROP_FUN=$(cat Result/$MAC_DEVICE/Capture/Fun_crop.txt)
+#CROP_REVERSE=$(cat Result/$MAC_DEVICE/Capture/Reverse_crop.txt)
 
 tap_time="5s"
 open_time="10s"
