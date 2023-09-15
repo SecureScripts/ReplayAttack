@@ -53,7 +53,7 @@ sleep 3s
     sleep 5s
 
  ./Restart_device.sh $PLUG_NAME
- sleep 30s
+ sleep 40s
 
 
 adb -s $ANDROID_SERIAL shell -n monkey -p $PACKAGE -c android.intent.category.LAUNCHER 1 &>/dev/null
