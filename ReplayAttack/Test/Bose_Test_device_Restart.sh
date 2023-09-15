@@ -53,7 +53,7 @@ sleep 3s
     sleep 5s
 
 
-    ./Restart_device $PLUG_NAME
+    ./Restart_device.sh $PLUG_NAME
 
 
    upnp-client --pprint call-action http://10.12.0.27:8091/7ab674f3-d4ad-6d5d-fcc7-a723330a4000.xml RC/SetVolumeDB InstanceID=0 Channel=Master DesiredVolume=0
