@@ -56,7 +56,7 @@ sleep 3s
  sleep 30s
 
 
-adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1 &>/dev/null
+adb -s $ANDROID_SERIAL shell -n monkey -p $PACKAGE -c android.intent.category.LAUNCHER 1 &>/dev/null
 
 sleep $open_time
 
@@ -72,7 +72,7 @@ sleep 3s
 adb -s $ANDROID_SERIAL shell -n input tap 371 727
 sleep 1s
 
-adb -s $ANDROID_SERIAL shell am force-stop $package
+adb -s $ANDROID_SERIAL shell am force-stop $PACKAGE
 
 
 
