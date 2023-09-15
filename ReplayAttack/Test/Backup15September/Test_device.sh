@@ -22,7 +22,6 @@ MAC_SMARTPHONE=$5
 #iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
 #iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
 #trap 'iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP; iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE' SIGINT
-PLUG_NAME=$6
 
 tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
 sniffing_time=$((tap_number*5+1+10+10))
@@ -32,9 +31,6 @@ sniffing_time=$((tap_number*5+1+10+10))
 filter="(ether src  $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether dst $MAC_DEVICE and ether src $MAC_SMARTPHONE)"
 START=1
 END=1
-
-
-./CaptureFunctionality.sh $ANDROID_SERIAL $MAC_DEVICE $INTERFACE $PACKAGE $MAC_SMARTPHONE $PLUG_NAME
 
 for (( i=$START; i<=$END; i++ ))
 do
@@ -46,7 +42,7 @@ do
    do
    result="Experiment Successfully"
    echo "Experiment $i"
-   EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Delayed/Experiment_$i"
+   EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_1"
    mkdir -p $EXP_FOLDER
    
@@ -68,11 +64,32 @@ do
         fi
     fi
    
+   echo "#############################STARTING SNIFFING#####################################"
+    tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
+    sleep 10s
 
+    temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time)
+    wait
+    chmod +r "$EXP_FOLDER"/capture.pcap
+        if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
+        then
+        echo "Experiment Failed"
+        result="Experiment Failed: Repeat"
+        continue
+        fi
+
+    sleep 5s
+   temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_REVERSE Result/$MAC_DEVICE/Reverse_coordinates.txt Reverse True $tap_time $open_time)
+        if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
+        then
+        echo "Experiment Failed"
+        result="Experiment Failed: Repeat"
+        continue
+        fi
 
 
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
-   python3 ReplayAttack.py Result/$MAC_DEVICE/Experiments/Delayed/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
+   python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 
   echo "CHECK GROUND TRUTH"
@@ -82,7 +99,7 @@ do
           COUNTER=$((COUNTER+1))
           echo "Experiment Failed for GROUND TRUTH: Repeat: $COUNTER"
           result="Experiment Failed"
-          if [[ "$COUNTER" -gt 3 ]]
+          if [[ "$COUNTER" -gt 0 ]]
           then
             echo "Replay Attack NOT working."
             echo "Replay Attack NOT working"> $EXP_FOLDER/attackResult.txt
@@ -101,8 +118,7 @@ do
 done
 
 chmod -R 777 Result
-python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Delayed/" "$END"> Result/$MAC_DEVICE/Experiments/Delayed/Final_res.txt
+python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Real_Time/" "$END"> Result/$MAC_DEVICE/Experiments/Real_Time/Final_res.txt
 
 #iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
 #iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
-
