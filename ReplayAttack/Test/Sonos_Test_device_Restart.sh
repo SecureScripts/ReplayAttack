@@ -56,7 +56,27 @@ sleep 3s
  sleep 30s
 
 
-   sonos control RINCON_38420B68763001400 pause --ip=10.10.0.15
+adb -s $ANDROID_SERIAL shell -n monkey -p $package -c android.intent.category.LAUNCHER 1 &>/dev/null
+
+sleep $open_time
+
+adb -s $ANDROID_SERIAL shell -n input tap 345 2028
+sleep 3s
+
+adb -s $ANDROID_SERIAL shell -n input tap 555 400
+sleep 3s
+
+adb -s $ANDROID_SERIAL shell -n input tap 300 1100
+sleep 3s
+
+adb -s $ANDROID_SERIAL shell -n input tap 371 727
+sleep 1s
+
+adb -s $ANDROID_SERIAL shell am force-stop $package
+
+
+
+sonos control RINCON_38420B68763001400 pause --ip=10.10.0.15
 
 
 
