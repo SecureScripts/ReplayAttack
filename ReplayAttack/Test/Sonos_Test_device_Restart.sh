@@ -24,7 +24,7 @@ PLUG_NAME=$6
 #iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
 #trap 'iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP; iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE' SIGINT
 
-tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
+#tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
 sniffing_time=$((25))
 
 
