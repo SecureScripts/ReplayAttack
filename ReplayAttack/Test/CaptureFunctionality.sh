@@ -59,7 +59,7 @@ while [[ $result != "Experiment Successfully" ]]
 
     temp=$(./trigger_functionality_testing.sh $ANDROID_SERIAL $PACKAGE Result/$MAC_DEVICE/Capture $CROP_FUN Result/$MAC_DEVICE/Fun_coordinates.txt Fun True $tap_time $open_time)
     wait
-    chmod +r "Result/$MAC_DEVICE/Experiments/Delayed/capture.pcap"/capture.pcap
+    chmod +r "Result/$MAC_DEVICE/Experiments/Delayed/capture.pcap"
         if [[ "${temp##*$'\n'}" != "Comparison ok" ]]
         then
         echo "Experiment Failed"

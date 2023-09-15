@@ -55,7 +55,7 @@ do
 
 
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
-   python3 ReplayAttack.py Result/$MAC_DEVICE/Experiments/Delayed/Experiment_1/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
+   python3 ReplayAttack.py Result/$MAC_DEVICE/Experiments/Delayed/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
 sleep 10s
 
