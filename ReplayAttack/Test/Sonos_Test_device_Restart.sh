@@ -36,7 +36,7 @@ for (( i=$START; i<=$END; i++ ))
 do
    
    echo "Experiment $i"
-   EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Real_Time/Experiment_$i"
+   EXP_FOLDER="Result/$MAC_DEVICE/Experiments/Delayed/Experiment_$i"
    MODEL_FOLDER="../Training/Result/$MAC_DEVICE/Experiments/Experiment_1"
    mkdir -p $EXP_FOLDER
    
@@ -83,7 +83,7 @@ sleep 3s
 done
 
 chmod -R 777 Result
-python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Real_Time/" "$END"> Result/$MAC_DEVICE/Experiments/Real_Time/Final_res.txt
+python3 getAccuracy.py "Result/$MAC_DEVICE/Experiments/Delayed/" "$END"> Result/$MAC_DEVICE/Experiments/Delayed/Final_res.txt
 
 #iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
 #iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
