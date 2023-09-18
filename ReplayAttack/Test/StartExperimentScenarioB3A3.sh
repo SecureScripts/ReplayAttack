@@ -24,7 +24,7 @@ chmod 777 *
 ./Test_device_Restart.sh 93PAY0E1MW ec:4d:3e:16:9b:e9 wlan0 com.yeelight.cherry 92:a3:f9:fe:6c:e9 tapo_plug110_4
 
 
-./Test_device_Restart.sh 93PAY0E1MW fc:67:1f:a9:a7:8d wlan0 com.tuya.smartlife 92:a3:f9:fe:6c:e9 tapo_plug110_25
+#./Test_device_Restart.sh 93PAY0E1MW fc:67:1f:a9:a7:8d wlan0 com.tuya.smartlife 92:a3:f9:fe:6c:e9 tapo_plug110_25
 #WLAN 3
 #EUFI MEROS
 
