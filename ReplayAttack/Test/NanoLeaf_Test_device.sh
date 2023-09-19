@@ -27,7 +27,7 @@ tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
 sniffing_time=$((20))
 
 
-filter="(ether src  $MAC_DEVICE and dst host 10.10.0.1) or (ether dst $MAC_DEVICE and src host 10.10.0.1)"
+filter="(ether src  $MAC_DEVICE and dst host 10.11.0.1) or (ether dst $MAC_DEVICE and src host 10.11.0.1)"
 START=1
 END=1
 
