@@ -29,7 +29,7 @@ tap_number=$(wc -l < Result/$MAC_DEVICE/Fun_coordinates.txt)
 sniffing_time=$((20))
 
 
-filter="(ether src  $MAC_DEVICE and dst host 10.10.0.1) or (ether dst $MAC_DEVICE and src host 10.11.0.1)"
+filter="(ether src  $MAC_DEVICE and dst host 10.11.0.1) or (ether dst $MAC_DEVICE and src host 10.11.0.1)"
 START=1
 END=1
 
@@ -55,7 +55,7 @@ sleep 3s
 
 
  ./Restart_device.sh $PLUG_NAME
- sleep 30s
+ sleep 60s
 
 
   python3 statusNanoLeaf.py "off"
@@ -65,7 +65,7 @@ sleep 3s
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
    python3 ReplayAttack.py $EXP_FOLDER/capture.pcap $MAC_SMARTPHONE $MAC_DEVICE $delay_time $MODEL_FOLDER > $EXP_FOLDER/res.txt
 
-sleep 120s
+sleep 10s
 
 echo "#############################CHECK GROUND TRUTH #####################################"
 
