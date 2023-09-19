@@ -46,12 +46,12 @@ sleep 3s
     tshark -i "$INTERFACE" -f "$filter" -w "$EXP_FOLDER/capture.pcap" -a duration:"$sniffing_time" &
     sleep 20s
 
-    python3 python3 statusNanoLeaf.py "on"
+    python3  statusNanoLeaf.py "on"
     wait
 
     sleep 5s
 
-   python3 python3 statusNanoLeaf.py "off"
+   python3  statusNanoLeaf.py "off"
 sleep 3s
 
    echo "#############################STARTING ATTACK AFTER DELAY #####################################"
