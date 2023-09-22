@@ -26,7 +26,7 @@ MAC_SMARTPHONE=$5
 #trap 'iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP; iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE' SIGINT
 
 
-filter="(ether src  $MAC_DEVICE and dst host 10.11.0.1)"
+filter="(ether src  $MAC_DEVICE and dst host 10.11.0.1) or (ether dst  $MAC_DEVICE and src host 10.11.0.1)"
 
 for i in 1
 do

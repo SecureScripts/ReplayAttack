@@ -81,9 +81,9 @@ def attack():
     for f in list_flows:
         if f.transport_layer == 'TCP':
             aggregated_requests = ""
-        for r in f.list_requests:
-            aggregated_requests = aggregated_requests + r
-        f.list_requests=[aggregated_requests]
+            for r in f.list_requests:
+                aggregated_requests = aggregated_requests + r
+            f.list_requests=[aggregated_requests]
 
     responses_to_test = []
     count_flow = len(list_flows) - 1
