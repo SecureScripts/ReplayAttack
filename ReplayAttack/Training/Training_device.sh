@@ -13,20 +13,9 @@ tap_number=$(wc -l < ../Test/Result/$MAC_DEVICE/Fun_coordinates.txt)
 tshark_time=$((tap_number*5+1+10+10))
 tshark_time=$((tshark_time*training_times*2))
 echo $tshark_time
-#temp=$(./switch_network.sh $ANDROID_SERIAL $INTERFACE)
-#MAC_SMARTPHONE="${temp##*$'\n'}"
+
 MAC_SMARTPHONE=$5
-#echo $MAC_SMARTPHONE
 
-#temp_target_ip_address=$(arp -a | grep $MAC_DEVICE | awk '{print $2}')
-#let len=${#temp_target_ip_address}-1
-#IP_DEVICE=$(cut -c 2-$len <<< $temp_target_ip_address)
-#iptables -I FORWARD 1 -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
-#iptables -I FORWARD 2 -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
-#trap 'iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP; iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE' SIGINT
-
-
-#filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE)"
 filter="(ether src $MAC_DEVICE and ether dst $MAC_SMARTPHONE) or (ether src $MAC_SMARTPHONE and ether dst $MAC_DEVICE)"
 for i in 1
 do
@@ -46,5 +35,3 @@ done
 chmod -R 777 Result
 
 
-#iptables -D FORWARD -i $INTERFACE -o eth1 -m mac --mac-source $MAC_DEVICE -j DROP
-#iptables -D  FORWARD -i eth1 -o $INTERFACE -j DROP -d $IP_DEVICE
