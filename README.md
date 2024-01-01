@@ -12,7 +12,7 @@ We utilized REPLIOT in a laboratory environment to assess replay attack vulnerab
 For each device under test, follow these steps:
 
 ### Setup
-- Execute REPLIOT on the AP. We used a laptop with Ubuntu 20.
+- Copy the ReplayAttack Folder on the AP. We used a laptop with Ubuntu 20.
 - Install the companion app of the device on a smartphone (Google Pixel 3a was used in our tests).
 - Create a folder named with the MAC address of the device inside "ReplayAttack/Test/Result."
 - Within the above folder, create three files: `Fun_coordinates.txt`, `Reverse_coordinates.txt`, `Ground_coordinates.txt`. In `Fun_coordinates.txt`, insert the coordinates to lead the device into the OBVERSE state after the app is open. Similarly, insert coordinates into `Reverse_coordinates.txt` to lead the device into the REVERSE state after the app is open. Often, these two files have the same content. Finally, insert coordinates into `Ground_coordinates.txt` to lead the device into the screen before submitting the OBSERVE command. If you use a Google Pixel 3a, you can copy the coordinates from the folder of the device we used in our laboratory.
