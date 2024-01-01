@@ -7,7 +7,7 @@ TODO
 
 ## Usage in the Laboratory
 
-We utilized REPLIOT in a laboratory environment to assess replay attack vulnerabilities in 41 commercial IoT devices. To replicate our results, you need the physical device connected to an access point (AP).
+We utilized REPLIOT in a laboratory environment to assess replay attack vulnerabilities in 41 commercial IoT devices. To replicate our results, you need the physical device connected to an access point (AP) where the tool runs.
 
 For each device under test, follow these steps:
 
