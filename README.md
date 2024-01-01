@@ -1,9 +1,7 @@
 # REPLIOT
 
 REPLIOT is an automatic tool for testing replay attacks in a smart home environment. The tool is designed to be *agnostic* and works with any type of device that communicates with the companion app through the local network. REPLIOT includes a detection module that analyzes the device's responses to automatically determine the success of an attack.
-
-## Usage in Home Environment
-TODO
+    
 
 ## Usage in the Laboratory
 
@@ -46,3 +44,40 @@ where:
   - INTERFACE: Network interface to sniff the traffic.
   - PACKAGE: Package name of the companion app.
   - MAC_SMARTPHONE: MAC address of the smartphone.
+
+
+## Usage in Home Environment
+
+### Training Phase
+
+Lunch the following command: 
+```bash 
+bash ReplayAttack/Training/Training_device.sh `MAC\_DEVICE` `INTERFACE` `MAC\_SMARTPHONE` `SNIFF\_TIME`
+```
+where:
+  - MAC_DEVICE: MAC address of the IoT device.
+  - INTERFACE: Network interface to sniff the traffic.
+  - MAC_SMARTPHONE: MAC address of the smartphone.
+  - SNIFF_TIME: time (seconds) during which the tool sniffs the traffic
+
+When the tool displays in console "Start triggering the device", the user needs to set the device in the OBVERSE and REVERSE state alternatively. This procedure should be repeated at least five times.
+
+
+### Test Phase
+
+Lunch the following command: 
+```bash 
+bash ReplayAttack/Test/test_device.sh `MAC\_DEVICE` `INTERFACE` `MAC\_SMARTPHONE` `SNIFF\_TIME` `DELAY\_TIME`
+```
+where:
+  - MAC_DEVICE: MAC address of the IoT device.
+  - INTERFACE: Network interface to sniff the traffic.
+  - MAC_SMARTPHONE: MAC address of the smartphone.
+  - SNIFF_TIME: time (seconds) during which the tool sniffs the traffic
+  - DELAY_TIME: time (seconds) during after which the tool starts the replay attack
+    
+When the tool displays in console "Start triggering the device", the user needs to set the device in the OBVERSE state.
+When the tool displays in console "Sniffing completed. The attack will start in `DELAY\_TIME`s", the user needs to set the device in the REVERSE state.
+Now wait for the tool to display in console if the attack has worked or not.
+
+
