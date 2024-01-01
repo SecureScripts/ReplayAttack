@@ -23,7 +23,7 @@ For each device under test, follow these steps:
 
 Lunch the following command: 
 ```bash 
-bash ReplayAttack/Training/Training_device.sh `SERIAL\_NUMBER` `MAC\_DEVICE` `INTERFACE` `PACKAGE` `MAC\_SMARTPHONE`
+bash ReplayAttack/Training/Training_device.sh `SERIAL_NUMBER` `MAC_DEVICE` `INTERFACE` `PACKAGE` `MAC_SMARTPHONE`
 ```
 where:
   - SERIAL_NUMBER: Serial number of the phone in ADB.
@@ -36,7 +36,7 @@ where:
 
 Lunch the following command: 
 ```bash 
-bash ReplayAttack/Test/test_device.sh `SERIAL\_NUMBER` `MAC\_DEVICE` `INTERFACE` `PACKAGE` `MAC\_SMARTPHONE`
+bash ReplayAttack/Test/test_device.sh `SERIAL_NUMBER` `MAC_DEVICE` `INTERFACE` `PACKAGE` `MAC_SMARTPHONE`
 ```
 where:
   - SERIAL_NUMBER: Serial number of the phone in ADB.
@@ -52,7 +52,7 @@ where:
 
 Lunch the following command: 
 ```bash 
-bash ReplayAttack/Training/Training_device.sh `MAC\_DEVICE` `INTERFACE` `MAC\_SMARTPHONE` `SNIFF\_TIME`
+bash ReplayAttack/Training/Training_device.sh `MAC_DEVICE` `INTERFACE` `MAC_SMARTPHONE` `SNIFF_TIME`
 ```
 where:
   - MAC_DEVICE: MAC address of the IoT device.
@@ -67,7 +67,7 @@ When the tool displays in console "Start triggering the device", the user needs 
 
 Lunch the following command: 
 ```bash 
-bash ReplayAttack/Test/test_device.sh `MAC_DEVICE` `INTERFACE` `MAC\_SMARTPHONE` `SNIFF\_TIME` `DELAY\_TIME`
+bash ReplayAttack/Test/test_device.sh `MAC_DEVICE` `INTERFACE` `MAC_SMARTPHONE` `SNIFF_TIME` `DELAY_TIME`
 ```
 where:
   - MAC_DEVICE: MAC address of the IoT device.
@@ -77,7 +77,7 @@ where:
   - DELAY_TIME: time (seconds) during after which the tool starts the replay attack
     
 When the tool displays in console "Start triggering the device", the user needs to set the device in the OBVERSE state. <br />
-When the tool displays in console "Sniffing completed. The attack will start in `DELAY\_TIME`s", the user needs to set the device in the REVERSE state. <br />
+When the tool displays in console "Sniffing completed. The attack will start in `DELAY_TIME`s", the user needs to set the device in the REVERSE state. <br />
 Now wait for the tool to display in console if the attack has worked or not.
 
 
