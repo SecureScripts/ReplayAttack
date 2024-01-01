@@ -21,21 +21,26 @@ For each device under test, follow these steps:
 
 ### Training Phase
 
-Lunch the following command: bash ReplayAttack/Training/Training_device.sh `SERIAL\_NUMBER` `MAC\_DEVICE` `INTERFACE` `PACKAGE` `MAC\_SMARTPHONE`
+Lunch the following command: 
+```bash 
+bash ReplayAttack/Training/Training_device.sh `SERIAL\_NUMBER` `MAC\_DEVICE` `INTERFACE` `PACKAGE` `MAC\_SMARTPHONE`
+```
 where:
-  -SERIAL_NUMBER: Serial number of the phone in ADB.
-  -MAC_DEVICE: MAC address of the IoT device.
-  -INTERFACE: Network interface to sniff the traffic.
-  -PACKAGE: Package name of the companion app.
-  -MAC_SMARTPHONE: MAC address of the smartphone.
+  - SERIAL_NUMBER: Serial number of the phone in ADB.
+  - MAC_DEVICE: MAC address of the IoT device.
+  - INTERFACE: Network interface to sniff the traffic.
+  - PACKAGE: Package name of the companion app.
+  - MAC_SMARTPHONE: MAC address of the smartphone.
 
 ### Test Phase
 
-Lunch the following command: bash ReplayAttack/Test/test_device.sh `SERIAL\_NUMBER` `MAC\_DEVICE` `INTERFACE` `PACKAGE` `MAC\_SMARTPHONE`
+Lunch the following command: 
+```bash 
+bash ReplayAttack/Test/test_device.sh `SERIAL\_NUMBER` `MAC\_DEVICE` `INTERFACE` `PACKAGE` `MAC\_SMARTPHONE`
+```
 where:
-  -SERIAL_NUMBER: Serial number of the phone in ADB.
-  -MAC_DEVICE: MAC address of the IoT device.
-  -INTERFACE: Network interface to sniff the traffic.
-  -PACKAGE: Package name of the companion app.
-  -MAC_SMARTPHONE: MAC address of the smartphone.
-
+  - SERIAL_NUMBER: Serial number of the phone in ADB.
+  - MAC_DEVICE: MAC address of the IoT device.
+  - INTERFACE: Network interface to sniff the traffic.
+  - PACKAGE: Package name of the companion app.
+  - MAC_SMARTPHONE: MAC address of the smartphone.
