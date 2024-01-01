@@ -67,7 +67,7 @@ When the tool displays in console "Start triggering the device", the user needs 
 
 Lunch the following command: 
 ```bash 
-bash ReplayAttack/Test/test_device.sh `MAC\_DEVICE` `INTERFACE` `MAC\_SMARTPHONE` `SNIFF\_TIME` `DELAY\_TIME`
+bash ReplayAttack/Test/test_device.sh `MAC_DEVICE` `INTERFACE` `MAC\_SMARTPHONE` `SNIFF\_TIME` `DELAY\_TIME`
 ```
 where:
   - MAC_DEVICE: MAC address of the IoT device.
