@@ -1,15 +1,12 @@
 import collections
 import math
-import signal
 import string
 import sys
 
-import numpy as np
 import pyshark
-from threading import Thread
 from time import sleep
 import socket
-import os
+
 
 import nltk
 nltk.download('punkt')
