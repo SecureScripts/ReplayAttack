@@ -11,6 +11,9 @@ from time import sleep
 import socket
 import os
 
+import nltk
+nltk.download('punkt')
+
 
 class Flow:
     def __init__(self, transport_layer, dst_ip, dst_port, src_port, list_requests: list, list_responses: list):
